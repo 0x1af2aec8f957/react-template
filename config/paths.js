@@ -47,6 +47,13 @@ module.exports = {
   appIndexJs: resolveApp('src/main.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  babelSrc: [
+    resolveApp('src'),
+    resolveApp('node_modules/em-util'),
+    resolveApp('node_modules/em-vw'),
+    resolveApp('node_modules/js-calculation'),
+    resolveApp('node_modules/js-transmission')
+  ],
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
