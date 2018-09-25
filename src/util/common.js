@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const mergeProps = obj => (
+export const mergeProps = obj => ( // mapObjectToProps
   WrappedComponent => class extends React.Component {
     constructor (props) {
       super(props)
@@ -26,13 +26,13 @@ export const mergeProps = obj => (
     }
 
     render () {
-      const props = {
+      const wrappedProps = {
         state: this.state, // record
         update: this.update,
         delete: this.delete,
         select: this.select,
       }
-      return <WrappedComponent {...this.props} {...props}/>
+      return <WrappedComponent {...this.props} {...wrappedProps}/>
     }
   }
 )
