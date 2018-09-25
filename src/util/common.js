@@ -7,10 +7,16 @@ export const mergeProps = obj => ( // mapObjectToProps
       this.state = obj
     }
 
+    call = async (func) => { // Execute asynchronous function
+      return await func()
+    }
+
     update = (obj_func) => { // add or modify
+      const state = this.state
+      const call = this.call
       return this.setState(
         typeof obj_func === 'function'
-          ? obj_func()
+          ? obj_func({state, call})
           : obj_func,
       )
     }
