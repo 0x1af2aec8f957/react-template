@@ -27,8 +27,7 @@ const NoMatch = ({match, history}) => (
             <span className="has-text-danger no-select">{index + 1}-</span>
             <span
               className="has-text-success padding-half-left padding-half-right">{key}</span>:
-            <span className="has-text-info padding-half-left">{JSON.stringify(
-              value)}</span>
+            <span className="has-text-info padding-half-left">{JSON.stringify(value)}</span>
           </p>
         ))
       }
