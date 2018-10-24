@@ -10,7 +10,8 @@ export default class extends Component {
   )
   static Button = ({type, className = '', outline, disabled, invert, round, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) => (
     <button className={`
-    button ${color ? `is-${color}` : ''}
+    button
+    ${color ? `is-${color}` : ''}
     ${size ? `is-${size}` : ''}
     ${status ? `is-${status}ed` : ''}
     ${outline ? 'is-outlined' : ''}
@@ -48,8 +49,11 @@ export default class extends Component {
   )
 
   static Image = ({className = '', alt = '', round, size/*16x16|24x24|32x32|48x48|64x64|96x96|128x128|square|1by1|5by4|4by3|3by2|5by3|16by9|2by1|3by1|4by5|3by4|2by3|3by5|9by16|1by2|1by3*/, src, ...otherProps}) => (
-    <figure className={`image is-${size} ${className}`} {...otherProps}>
-      <img className={round ? 'is-rounded' : ''}
+    <figure className={`
+    image
+    ${size ? `is-${size} ` : ''}
+    `} {...otherProps}>
+      <img className={`${round ? 'is-rounded' : ''} ${className}`}
            src={src || `https://bulma.io/images/placeholders/${size}.png`}
            alt={alt}/>
     </figure>

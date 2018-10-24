@@ -19,7 +19,7 @@ export default class extends Component {
 
   static Container = ({className = '', ...otherProps}) => (
     // A simple container to center your content horizontally
-    <footer className={`container ${className}`} {...otherProps}/>
+    <div className={`container ${className}`} {...otherProps}/>
   )
 
   render () {
