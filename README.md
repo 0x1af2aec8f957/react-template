@@ -4,6 +4,8 @@
 
 > Use webpack css module (exclude:/node_modules|global\.css/), get [css-loader](https://github.com/webpack-contrib/css-loader)。
 
+> Use [bulma.css](https://bulma.io) (Old version use qc_ui).
+
 ## Build Setup
 
 ``` bash
