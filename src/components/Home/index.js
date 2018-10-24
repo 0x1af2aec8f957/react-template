@@ -1,8 +1,14 @@
-import React from 'react';
-import styles from './Home.css';
+import React from 'react'
+import styles from './Home.css'
+import Layout from '../../template/Layout'
+import Title from '../../template/Elements/Title'
 
-export default () => (
-  <div>
-    <h2 className={styles['text-red']}>Home</h2>
-  </div>
+export default (props) => (
+  <Layout.Content>
+    <Layout.Container>
+      <Title.Subtitle className={styles['text-red']}>This page is Home</Title.Subtitle>
+      <strong className="has-text-grey">Relevant information:</strong>
+      <pre>{JSON.stringify(props, null, 2)}</pre>
+    </Layout.Container>
+  </Layout.Content>
 );

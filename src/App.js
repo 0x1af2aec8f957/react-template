@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 // import 'qc-ui'
-import 'bulma'
+import 'bulma/css/bulma.css'
 import ReactConfig from './config/React'
 import Router from './config/Router'
 import './assets/style/global.css'
 import logo from './assets/images/logo.svg'
+import Title from './template/Elements/Title'
+import Elements from './template/Elements'
 
 ReactConfig({ // TODO: Extended React.Component this
   msg: 'hello react app',
@@ -19,8 +21,8 @@ class App extends Component {
 
   render () { // 组件渲染
     return <Router>
-      <img src={logo} alt="logo" style={{width: 150}}/>
-      <h1>{this.msg}</h1>
+      <Elements.Image className="animated rotateOut infinite" src={logo} alt="logo" style={{width: 150}}/>
+      <Title>{this.msg}</Title>
     </Router>
   }
 

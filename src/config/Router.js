@@ -5,38 +5,30 @@ import {
   Switch,
   // Redirect,
 } from 'react-router-dom'
+import Layout from '../template/Layout'
+import Level from '../template/Layout/Level'
+import Elements from '../template/Elements'
+import Title from '../template/Elements/Title'
 import { Home, About } from '../components'
 
 // TODO:Example
 
 const NoMatch = ({match, history}) => (
-  <div style={{padding: '3rem 1rem'}}>
-    <h3 className="has-text-centered" style={{marginBottom: '3rem'}}>
-      No match for <code>{match.path}</code>
-    </h3>
-    <div className="has-text-left has-text-grey is-text">
-      <p style={{marginBottom: '1.8rem'}}>
-        <span className="padding-half-right">Operation</span>-
-        <span className="padding-half-left has-text-link"
-              onClick={history.goBack}>Go Back</span>.
-      </p>
-      {
-        Object.entries(match).map(([key, value], index) => (
-          <p key={`json.string-${index}`} className="has-background-light"
-             style={{marginTop: '0.6rem'}}>
-            <span className="has-text-danger no-select">{index + 1}-</span>
-            <span
-              className="has-text-success padding-half-left padding-half-right">{key}</span>:
-            <span className="has-text-info padding-half-left">{JSON.stringify(value)}</span>
-          </p>
-        ))
-      }
-    </div>
-    <p style={{marginTop: '1.8rem'}}>Go to <a
-      href="https://github.com/noteScript/react-template">React-template</a> to
-      see a detailed description of the problem.
-    </p>
-  </div>
+  <Layout.Content className="is-block">
+    <Layout.Container>
+      <Title.Subtitle>
+        No match for <code className="has-text-danger">{match.path}</code>
+      </Title.Subtitle>
+      <div className="has-text-grey is-text">
+        <p>
+          <span>Operation&nbsp;&nbsp;_</span>
+          <Elements.Button invert color="danger" onClick={history.goBack}>Go Back</Elements.Button>
+        </p>
+        <strong className="has-text-grey">Relevant information:</strong>
+        <pre>{JSON.stringify(match, null, 2)}</pre>
+      </div>
+    </Layout.Container>
+  </Layout.Content>
 )
 
 export default class extends Component {
@@ -44,15 +36,32 @@ export default class extends Component {
     return (
       <Router basename="/">
         {/*React.Children.only expected to receive a single React element child*/}
-        <div className="items-center justify-center flex-column">
-          {this.props.children}
+        <Layout size="fullheight">
+          <Layout.Header>
+            <Level>
+              <Level.Item>
+                {this.props.children}
+              </Level.Item>
+            </Level>
+          </Layout.Header>
           <Switch>
-            <Route path="/home" component={Home}></Route>
-            <Route path="/about" component={About}></Route>
+            <Route path="/home" exact component={Home}/>
+            <Route path="/about" exact component={About}/>
             {/*match 404*/}
-            <Route component={NoMatch || Home}/>
+            <Route component={NoMatch}/>
           </Switch>
-        </div>
+          <Layout.Footer>
+            <Layout.Container>
+              <Elements.Content>
+                <blockquote>
+                  Go to <a
+                  href="https://github.com/noteScript/react-template">React-template</a> to
+                  see a detailed description of the problem.
+                </blockquote>
+              </Elements.Content>
+            </Layout.Container>
+          </Layout.Footer>
+        </Layout>
       </Router>
     )
   }
