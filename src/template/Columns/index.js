@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Row = ({children, gapLess, multiLine, className = ''}) => {
+export function Row ({children, gapLess, multiLine, className = ''}) {
   const rowClassName = `columns 
     ${gapLess ? 'is-gapless' : ''} 
     ${multiLine ? 'is-multiline' : ''}
@@ -10,12 +10,14 @@ export const Row = ({children, gapLess, multiLine, className = ''}) => {
   )
 }
 
-export const Col = ({size = 6/*2-11*/, children, offset = 0/*2-11*/, className = ''}) => (
-  // As the grid can be divided into 12 columns
-  <div className={`
+export function Col ({size = 6/*2-11*/, children, offset = 0/*2-11*/, className = ''}) {
+  return (
+    // As the grid can be divided into 12 columns
+    <div className={`
   column
   ${size ? `is-${size}` : ''}
   is-offset-${offset}
   ${className}
   `} children={children}/>
-)
+  )
+}

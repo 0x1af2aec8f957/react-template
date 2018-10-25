@@ -4,6 +4,19 @@ const DEFAULT_COLOR = 'info'
 
 class Field extends Component {
 
+  static Label ({className = '', ...otherProps}) {
+    return (
+      <div className="field-label is-normal">
+        <label className={`label ${otherProps}`} {...otherProps}/>
+      </div>
+    )
+  }
+
+  static Value ({className = '', ...otherProps}) {
+    return (
+      <div className={`field-body ${className}`} {...otherProps}/>)
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -11,15 +24,6 @@ class Field extends Component {
       color: DEFAULT_COLOR,
     }
   }
-
-  static Label = ({className = '', ...otherProps}) => (
-    <div className="field-label is-normal">
-      <label className={`label ${otherProps}`} {...otherProps}/>
-    </div>
-  )
-
-  static Body = ({className = '', ...otherProps}) => (
-    <div className={`field-body ${className}`} {...otherProps}/>)
 
   handelChange = (value) => {
     const {onChange} = this.props
@@ -46,7 +50,7 @@ class Field extends Component {
   }
 }
 
-export default class extends Component {
+export default class Form extends Component {
 
   static Field = Field
 

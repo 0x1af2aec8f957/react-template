@@ -8,13 +8,17 @@ const switchClassList = (e) => {
 }
 
 class Menu extends Component {
-  static Start = ({className = '', ...otherProps}) => (
-    <div className={`navbar-start ${className}`} {...otherProps}/>
-  )
+  static Start ({className = '', ...otherProps}) {
+    return (
+      <div className={`navbar-start ${className}`} {...otherProps}/>
+    )
+  }
 
-  static End = ({className = '', ...otherProps}) => (
-    <div className={`navbar-end ${className}`} {...otherProps}/>
-  )
+  static End ({className = '', ...otherProps}) {
+    return (
+      <div className={`navbar-end ${className}`} {...otherProps}/>
+    )
+  }
 
   render () { // 汉堡菜单
     const {className = '', ...otherProps} = this.props
@@ -25,47 +29,56 @@ class Menu extends Component {
   }
 }
 
-export default class extends Component {
+export default class Navbar extends Component {
 
-  static Brand = ({className = '', ...otherProps}) => (
-    <div className={`navbar-brand ${className}`} {...otherProps}/>
-  ) // 导航栏左侧
+  static Brand ({className = '', ...otherProps}) {
+    return (
+      <div className={`navbar-brand ${className}`} {...otherProps}/>
+    ) // 导航栏左侧
+  }
 
-  static Burger = () => (
-    <div className="navbar-burger" onClick={switchClassList}>
-      <span/><span/><span/>
-    </div>
-  ) // 汉堡菜单
+  static Burger () {
+    return (
+      <div className="navbar-burger" onClick={switchClassList}>
+        <span/><span/><span/>
+      </div>
+    ) // 汉堡菜单
+  }
 
   static Menu = Menu
 
-  static  Item = ({className = '', ...otherProps}) => (
-    <span className={`navbar-item ${className}`} {...otherProps}/>
-  )
+  static Item ({className = '', ...otherProps}) {
+    return (
+      <span className={`navbar-item ${className}`} {...otherProps}/>
+    )
+  }
 
-  static Divider = () => (<hr className="navbar-divider"/>)
+  static Divider () {return (<hr className="navbar-divider"/>)}
 
-  static  Dropdown = ({label, hover/*boll*/, box/*bool*/, direction/*right*/, dropDown/*up|down*/, className, ...otherProps}) => (
-    <div className={`
+  static Dropdown ({label, hover/*boll*/, box/*bool*/, direction/*right*/, dropDown/*up|down*/, className, ...otherProps}) {
+    return (
+      <div className={`
     navbar-item
     has-dropdow
     ${hover ? 'is-hoverable' : ''}
     ${dropDown ? `has-dropdown-${dropDown}` : ''}
       `}>
-      <a className="navbar-link" onClick={
-        event => !hover && event.target.parentNode.classList.toggle('is-active')
-      }>
-        {label}
-      </a>
+        <a className="navbar-link" onClick={
+          event => !hover &&
+            event.target.parentNode.classList.toggle('is-active')
+        }>
+          {label}
+        </a>
 
-      <div className={`
+        <div className={`
       navbar-dropdown
       ${box ? 'is-boxed' : ''}
       ${direction ? `is-${direction}` : ''}
       ${className}
       `} {...otherProps}/>
-    </div>
-  )
+      </div>
+    )
+  }
 
   render () {
     const {transparent/*bool*/, className = '', direction/*top|bottom*/, color/*primary|link|info|success|warning|danger|black|dark|light|white*/, ...otherProps} = this.props

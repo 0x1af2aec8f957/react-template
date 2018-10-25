@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import 'qc-ui'
 import 'bulma/css/bulma.css'
 import ReactConfig from './config/React'
-import Router from './config/Router'
+import Routes from './config/Router'
 import './assets/style/global.css'
 import logo from './assets/images/logo.svg'
 import Title from './template/Elements/Title'
@@ -20,10 +20,10 @@ class App extends Component {
   }
 
   render () { // 组件渲染
-    return <Router>
+    return <Routes>
       <Elements.Image className="animated rotateOut infinite" src={logo} alt="logo" style={{width: 150}}/>
       <Title>{this.msg}</Title>
-    </Router>
+    </Routes>
   }
 
   componentDidMount () { // 组件渲染之后调用，只调用一次

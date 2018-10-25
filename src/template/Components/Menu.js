@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 class MenuList extends Component {
-  static Item = ({className = '', active, ...otherProps}) => (
-    <li className={`${active ? 'is-active' : ''} ${className}`}
-        {...otherProps}/>
-  )
+  static Item ({className = '', active, ...otherProps}) {
+    return (
+      <li className={`${active ? 'is-active' : ''} ${className}`}
+          {...otherProps}/>
+    )
+  }
 
   render () {
     const {className = '', ...otherProps} = this.props
@@ -14,9 +16,12 @@ class MenuList extends Component {
   }
 }
 
-export default class extends Component {
-  static Label = ({className = '', ...otherProps}) => (
-    <div className={`menu-label ${className}`} {...otherProps}/>)
+export default class Menu extends Component {
+  static Label ({className = '', ...otherProps}) {
+    return (
+      <div className={`menu-label ${className}`} {...otherProps}/>
+    )
+  }
 
   static MenuList = MenuList
 

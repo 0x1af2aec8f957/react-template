@@ -3,18 +3,18 @@ import React, { Component } from 'react'
 const enterMethod = (event, method) => event.keyCode === 13 && method &&
   method(event.target.value)
 
-const Field = ({
-                 prefix/*image icons*/,
-                 suffix/*image icons*/,
-                 addonAfter/*ReactNode*/,
-                 addonBefore/*ReactNode*/,
-                 size,
-                 expand,
-                 color/*primary|info|success|warning|danger*/,
-                 status/*normal|hover|focus|loading*/,
-                 help,
-                 children,
-               }) => {
+function Field ({
+                  prefix/*image icons*/,
+                  suffix/*image icons*/,
+                  addonAfter/*ReactNode*/,
+                  addonBefore/*ReactNode*/,
+                  size,
+                  expand,
+                  color/*primary|info|success|warning|danger*/,
+                  status/*normal|hover|focus|loading*/,
+                  help,
+                  children,
+                }) {
   const controlProps = {
     className: `
     ${status === 'loading' ? 'is-loading' : ''} 
@@ -85,16 +85,16 @@ const getInputProps = (
   ...otherProps,
 })
 
-export default class extends Component {
+export default class Input extends Component {
 
-  static TextArea = (props) => (
+  static TextArea (props){return (
     <Field {...props}>
       <textarea {...getInputProps(props, 'textarea')}
                 rows={props.rows/*height[Number]*/}/>
     </Field>
-  )
+  )}
 
-  static Select = (props) => (
+  static Select (props){return (
     <Field {...props}>
       <div {...getInputProps(
         {...props, className: `${props.multiple ? 'is-multiple' : ''}`},
@@ -110,9 +110,9 @@ export default class extends Component {
         </select>
       </div>
     </Field>
-  )
+  )}
 
-  static Search = ({placeholder, onChange, onSearch, label, color/*按钮颜色*/, expand, ...otherProps}) => {
+  static Search ({placeholder, onChange, onSearch, label, color/*按钮颜色*/, expand, ...otherProps}) {
     let inputValue = ''
 
     function valueChange (event) {

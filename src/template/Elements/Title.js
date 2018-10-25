@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
-export default class extends Component {
-  static Subtitle = ({className = '', size/*Number[1-6]*/, otherProps}) => (
-    <h2 className={`
+export default class Title extends Component {
+  static Subtitle ({className = '', size/*Number[1-6]*/, otherProps}) {
+    return (
+      <h2 className={`
       subtitle
       ${size ? `is-${size}` : ''}
       ${className}
       `} {...otherProps}/>
-  )
+    )
+  }
 
   render () {
     const {className = '', size/*Number[1-6]*/, spaced, ...otherProps} = this.props

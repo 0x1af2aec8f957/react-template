@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 
 class Menu extends Component {
 
-  static Item = ({className, active, ...otherProps}) => (
-    <div className={`dropdown-item ${active ? 'is-active' : ''} ${className}`}
-         {...otherProps}/>
-  )
+  static Item ({className, active, ...otherProps}) {
+    return (
+      <div className={`dropdown-item ${active ? 'is-active' : ''} ${className}`}
+           {...otherProps}/>
+    )
+  }
 
-  static Divider = () => (<hr className="dropdown-divider"/>)
+  static Divider () {return (<hr className="dropdown-divider"/>)}
 
   render () {
     const {className = '', ...otherProps} = this.props
@@ -19,21 +21,23 @@ class Menu extends Component {
   }
 }
 
-export default class extends Component {
+export default class DropDown extends Component {
 
-  static Button = ({className = '', children, direction = 'down'/*up*/, ...otherProps}) => (
-    <div className="dropdown-trigger">
-      <button className={`button ${className}`}
-              aria-haspopup="true"
-              aria-controls="dropdown-menu"
-              {...otherProps}>
-        {children}
-        <span className="icon is-small">
+  static Button ({className = '', children, direction = 'down'/*up*/, ...otherProps}) {
+    return (
+      <div className="dropdown-trigger">
+        <button className={`button ${className}`}
+                aria-haspopup="true"
+                aria-controls="dropdown-menu"
+                {...otherProps}>
+          {children}
+          <span className="icon is-small">
         <i className={`fas fa-angle-${direction}`} aria-hidden="true"/>
       </span>
-      </button>
-    </div>
-  )
+        </button>
+      </div>
+    )
+  }
 
   static Menu = Menu
 

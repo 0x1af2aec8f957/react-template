@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
-export default class extends Component {
-  static Group = ({className = '', addons, ...otherProps}) => (
-    <div className={`
+export default class Tag extends Component {
+  static Group ({className = '', addons, ...otherProps}) {
+    return (
+      <div className={`
     tags
     ${addons ? 'is-addons' : ''}
     ${className}
     `} {...otherProps}/>
-  )
+    )
+  }
 
   render () {
     const {className = '', color/*black|dark|light|white|primary|link|info|success|warning|danger*/, size/*medium|large*/, delete: amputate, ...otherProps} = this.props

@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 
-export default class extends Component {
+export default class Tab extends Component {
 
-  static Item = ({className = '', active, ...otherProps}) => (
-    <li
-      className={`${active ? 'is-active' : ''} ${className}`} {...otherProps}/>
-  )
+  static Item ({className = '', active, ...otherProps}) {
+    return (
+      <li
+        className={`
+        ${active ? 'is-active' : ''}
+        ${className}
+        `} {...otherProps}/>
+    )
+  }
 
   render () {
     const {align/*centered|right*/, size/*small|medium|large*/, mode/*boxed|toggle|*/, round/*bool*/, fullWidth/*bool*/, ...otherProps} = this.props

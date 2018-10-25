@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
-export default class extends Component {
+export default class Breadcrumb extends Component {
 
-  static Item = ({active/*bool*/, className = '', ...otherProps}) => (
-    <li className={`${active ? 'is-active' : ''} ${className}`}
-        {...otherProps}/>
-  )
+  static Item ({active/*bool*/, className = '', ...otherProps}) {
+    return (
+      <li className={`${active ? 'is-active' : ''} ${className}`}
+          {...otherProps}/>
+    )
+  }
 
   render () {
     const {align/*centered|right*/, separator/*arrow|bullet|dot|succeeds*/, size/*small|medium|large*/, ...otherProps} = this.props

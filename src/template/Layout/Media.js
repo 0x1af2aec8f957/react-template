@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 
-export default class extends Component {
-  static Left = ({className = '', ...otherProps}) => (
-    <div className={`media-left ${className}`} {...otherProps}/>
-  )
-  static Right = ({className = '', ...otherProps}) => (
-    <figure className={`media-right ${className}`} {...otherProps}/>
-  )
+export default class Media extends Component {
+  static Left ({className = '', ...otherProps}) {
+    return (
+      <div className={`media-left ${className}`} {...otherProps}/>
+    )
+  }
 
-  static Content = ({className = '', ...otherProps}) => (
-    <div className={`media-content ${className}`} {...otherProps}/>
-  )
+  static Right ({className = '', ...otherProps}) {
+    return (
+      <figure className={`media-right ${className}`} {...otherProps}/>
+    )
+  }
+
+  static Content ({className = '', ...otherProps}) {
+    return (
+      <div className={`media-content ${className}`} {...otherProps}/>
+    )
+  }
 
   render () {
     // The famous media object prevalent in social media interfaces, but useful in any context

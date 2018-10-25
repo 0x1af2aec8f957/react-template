@@ -31,7 +31,7 @@ const NoMatch = ({match, history}) => (
   </Layout.Content>
 )
 
-export default class extends Component {
+export default class Routes extends Component {
   render () {
     return (
       <Router basename="/">
