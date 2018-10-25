@@ -21,3 +21,5 @@ export function Col ({size = 6/*2-11*/, children, offset = 0/*2-11*/, className 
   `} children={children}/>
   )
 }
+
+export default null

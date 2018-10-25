@@ -5,10 +5,8 @@ import {
   Switch,
   // Redirect,
 } from 'react-router-dom'
-import Layout from '../template/Layout'
-import Level from '../template/Layout/Level'
-import Elements from '../template/Elements'
-import Title from '../template/Elements/Title'
+import Layout, { Level } from '../template/Layout'
+import Elements, { Title } from '../template/Elements'
 import { Home, About } from '../components'
 
 // TODO:Example
@@ -22,7 +20,8 @@ const NoMatch = ({match, history}) => (
       <div className="has-text-grey is-text">
         <p>
           <span>Operation&nbsp;&nbsp;_</span>
-          <Elements.Button invert color="danger" onClick={history.goBack}>Go Back</Elements.Button>
+          <Elements.Button invert color="danger" onClick={history.goBack}>Go
+            Back</Elements.Button>
         </p>
         <strong className="has-text-grey">Relevant information:</strong>
         <pre>{JSON.stringify(match, null, 2)}</pre>

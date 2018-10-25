@@ -5,8 +5,7 @@ import ReactConfig from './config/React'
 import Routes from './config/Router'
 import './assets/style/global.css'
 import logo from './assets/images/logo.svg'
-import Title from './template/Elements/Title'
-import Elements from './template/Elements'
+import Elements, { Title } from './template/Elements'
 
 ReactConfig({ // TODO: Extended React.Component this
   msg: 'hello react app',
@@ -21,7 +20,8 @@ class App extends Component {
 
   render () { // 组件渲染
     return <Routes>
-      <Elements.Image className="animated rotateOut infinite" src={logo} alt="logo" style={{width: 150}}/>
+      <Elements.Image className="animated rotateOut infinite" src={logo}
+                      alt="logo" style={{width: 150}}/>
       <Title>{this.msg}</Title>
     </Routes>
   }

@@ -144,3 +144,7 @@ export default class Elements extends Component {
     )
   }
 }
+
+export { default as Notification } from './Notification'
+export { default as Tag } from './Tag'
+export { default as Title } from './Title'
