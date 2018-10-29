@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 
 export default class Pagination extends Component {
 
-  constructor (props) {
-    super(props)
-    const {total, pageSize, current} = props
+  constructor ({total, pageSize, current}) {
+    super(arguments[0])
     this.state = {
       total,
       pageSize,
@@ -18,7 +17,7 @@ export default class Pagination extends Component {
       (!hideOnSinglePage ||
         (this.state.total > this.state.pageSize)) &&
       (
-        <nav className={`
+        <div className={`
         pagination
         ${round ? 'is-rounded' : ''}
         ${size ? `is-${size}` : ''}
@@ -42,7 +41,7 @@ export default class Pagination extends Component {
               <a className="pagination-link" aria-label="Goto page 3">3</a>
             </li>
           </ul>
-        </nav>
+        </div>
       )
     )
   }

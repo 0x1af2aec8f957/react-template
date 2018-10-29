@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 // import 'qc-ui'
-import 'bulma/css/bulma.css'
 import ReactConfig from './config/React'
 import Routes from './config/Router'
 import './assets/style/global.css'

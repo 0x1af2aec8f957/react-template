@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 export default class Modal extends Component {
 
-  constructor (props) {
-    super(props)
+  constructor ({defaultShowState/*bool*/}) {
+    super(arguments[0])
     this.state = {
-      showState: props.defaultShowState/*bool*/,
+      showState: defaultShowState,
     }
   }
 

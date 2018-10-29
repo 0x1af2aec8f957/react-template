@@ -1,26 +1,41 @@
 import React, { Component } from 'react'
 
-const DEFAULT_COLOR = 'info'
+const DEFAULT_COLOR = 'info' // 默认选中的颜色
+const WRAPPED_LAYOUTS = ['horizontal'] // 需要Form自动处理的布局项
 
 class Field extends Component {
 
-  static Label ({className = '', ...otherProps}) {
+  static Label ({className = '', size/*small|normal|medium|large*/, ...otherProps}) {
     return (
-      <div className="field-label is-normal">
-        <label className={`label ${otherProps}`} {...otherProps}/>
-      </div>
+      <label className={`
+        label
+        ${size ? `is-${size}` : ''}
+        ${className}
+        `} {...otherProps}/>
     )
   }
 
-  static Value ({className = '', ...otherProps}) {
+  static Body ({className = '', ...otherProps}) {
     return (
       <div className={`field-body ${className}`} {...otherProps}/>)
   }
 
-  constructor (props) {
-    super(props)
+  static Control ({className = '', expand, multiLine, align/*right|centered*/, ...otherProps}) {
+    return (
+      <div className={`
+      control
+      ${className}
+      ${multiLine ? 'is-grouped-multiline' : ''}
+      ${expand ? 'is-expanded' : ''}
+      ${align ? `is-grouped-${align}` : ''}
+      `} {...otherProps}/>
+    )
+  }
+
+  constructor ({initialValue = ''}) {
+    super(arguments[0])
     this.state = {
-      value: props.initialValue || '',
+      value: initialValue,
       color: DEFAULT_COLOR,
     }
   }
@@ -39,13 +54,25 @@ class Field extends Component {
   }
 
   render () {
-    const {className = '', layout/*horizontal*/, ...fieldProps} = this.props
+    const {className = '', layout/*horizontal*/, group, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
+
+    const son = React.Children.map(children, function ({type, props}) {
+      const {size, ...otherProps} = props
+      return type === Field.Label && WRAPPED_LAYOUTS.includes(layout) ? (
+        <div className={`field-label ${size ? `is-${size}` : ''}`}
+             children={React.cloneElement(arguments[0], {...otherProps})}/>
+      ) : arguments[0]
+    })
+
     return (
       <div className={`
       field
+      ${group ? 'is-grouped' : ''}
+      ${addons ? 'has-addons' : ''}
+      ${narrow ? 'is-narrow' : ''}
       ${layout ? `is-${layout}` : ''}
       ${className}
-      `} {...fieldProps}/>
+      `} children={son} {...fieldProps}/>
     )
   }
 }
@@ -55,12 +82,23 @@ export default class Form extends Component {
   static Field = Field
 
   render () {
-    const {onSubmit, ...otherProps} = this.props
+    const {onSubmit, layout: layouts, children, ...otherProps} = this.props
+
+    const son = React.Children.map(children, function (/*child*/{type, props}) {
+      const {layout} = props
+      return type === Field
+        ? React.cloneElement(arguments[0], {
+          layout: layout || layouts,
+        })
+        : arguments[0]
+    })
+
     const formProps = {
       onSubmit: (event) => {
         event.preventDefault()
         onSubmit && onSubmit(event)
       },
+      children: son,
       ...otherProps,
     }
 

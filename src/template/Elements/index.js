@@ -2,16 +2,17 @@ import React, { Component } from 'react'
 import Icon from '../Components/Icon'
 
 export default class Elements extends Component {
-  static Buttons ({className = '', addons, ...otherProps}) {
+  static Buttons ({className = '', align/*centered|right*/,addons, ...otherProps}) {
     return (
       <div className={`
     buttons
     ${addons ? 'has-addons' : ''}
+    ${align ? `is-${align}` : ''}
     ${className}`} {...otherProps}/>
     )
   }
 
-  static Button ({type, className = '', outline, disabled, invert, round, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
+  static Button ({type, className = '', outline, disabled, invert, round, quiescent/*bool*/, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
     return (
       <button className={`
     button
@@ -22,6 +23,7 @@ export default class Elements extends Component {
     ${disabled ? 'is-static' : ''}
     ${invert ? 'is-inverted' : ''}
     ${round ? 'is-rounded' : ''}
+    ${quiescent ? 'is-static' : ''}
     ${className}
     `} type={type} disabled={disabled} {...otherProps}/>
     )
@@ -47,7 +49,7 @@ export default class Elements extends Component {
     )
   }
 
-  static Icon ({size/*small|medium|large*/, color/*info|success|warning|danger*/, type, ...otherProps}) {
+  static Icon ({size = 'small'/*small|medium|large*/, color/*info|success|warning|danger*/, type, ...otherProps}) {
     return (
       <div className={`
     icon
@@ -83,7 +85,7 @@ export default class Elements extends Component {
     )
   }
 
-  static Table ({className = '', fields, data, border/*bool*/, strip, narrow, hover, fullWidth}) {
+  static Table ({className = '', fields = [], data = [], footer/*ReactNode*/, caption/*ReactNode*/, border/*bool*/, strip, narrow, hover, fullWidth}) {
     return (
       <table className={`
     table
@@ -94,6 +96,7 @@ export default class Elements extends Component {
     ${fullWidth ? 'is-fullwidth' : ''}
     ${className}
     `}>
+        {caption && (<caption>{caption}</caption>)}
         <thead>
         <tr>
           {fields.map(({name, key, className = ''}, index) => (
@@ -102,21 +105,7 @@ export default class Elements extends Component {
           ))}
         </tr>
         </thead>
-        {/* <tfoot>
-      <tr>
-        <th><abbr title="Position">Pos</abbr></th>
-        <th>Team</th>
-        <th><abbr title="Played">Pld</abbr></th>
-        <th><abbr title="Won">W</abbr></th>
-        <th><abbr title="Drawn">D</abbr></th>
-        <th><abbr title="Lost">L</abbr></th>
-        <th><abbr title="Goals for">GF</abbr></th>
-        <th><abbr title="Goals against">GA</abbr></th>
-        <th><abbr title="Goal difference">GD</abbr></th>
-        <th><abbr title="Points">Pts</abbr></th>
-        <th>Qualification or relegation</th>
-      </tr>
-      </tfoot> */}
+        {footer && (<tfoot>{footer}</tfoot>)}
         <tbody>
         {data.map((item/*{key,name,render}*/, index) => (
           <tr key={`table-body-${item.key || item.name}-${index}`}

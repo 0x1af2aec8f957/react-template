@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 const switchClassList = (e) => {
   const el_self = e.target, el_menu = document.getElementById('navbar-menu')
@@ -29,7 +30,7 @@ class Menu extends Component {
   }
 }
 
-export default class Navbar extends Component {
+export default class NavBar extends Component {
 
   static Brand ({className = '', ...otherProps}) {
     return (
@@ -39,7 +40,7 @@ export default class Navbar extends Component {
 
   static Burger () {
     return (
-      <div className="navbar-burger" onClick={switchClassList}>
+      <div className="navbar-burger burger" onClick={switchClassList}>
         <span/><span/><span/>
       </div>
     ) // 汉堡菜单
@@ -47,9 +48,23 @@ export default class Navbar extends Component {
 
   static Menu = Menu
 
-  static Item ({className = '', ...otherProps}) {
+  static Item ({className = '', active, ...otherProps}) {
     return (
-      <span className={`navbar-item ${className}`} {...otherProps}/>
+      <div className={`
+      navbar-item
+      ${active ? 'is-active' : ''}
+      ${className}
+      `} {...otherProps}/>
+    )
+  }
+
+  static Link ({path, href, ...otherProps}) {
+    return (
+      href
+        ? (<a href={href} {...otherProps}/>)
+        : path
+        ? (<Link to={path}  {...otherProps}/>)
+        : null
     )
   }
 
@@ -83,7 +98,7 @@ export default class Navbar extends Component {
   render () {
     const {transparent/*bool*/, className = '', direction/*top|bottom*/, color/*primary|link|info|success|warning|danger|black|dark|light|white*/, ...otherProps} = this.props
     return (
-      <nav className={`
+      <div className={`
       navbar
       ${color ? `is-${color}` : ''}
       ${transparent ? 'is-transparent' : ''}

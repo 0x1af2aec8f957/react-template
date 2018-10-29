@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 export default class UploadFile extends Component {
 
-  constructor (props) {
-    super(props)
+  constructor ({name = '...'}) {
+    super(arguments[0])
     this.state = {
-      name: props.name || '...',
+      name: name,
     }
   }
 
@@ -26,7 +26,8 @@ export default class UploadFile extends Component {
           is-boxed
           ${size ? `is-${size}` : ''}`}>
           <label className="file-label">
-            <input className="file-input" type="file" onChange={this.handelChange}
+            <input className="file-input" type="file"
+                   onChange={this.handelChange}
                    accept={accept}/>
             <div className="file-cta">
               <div className="file-icon">

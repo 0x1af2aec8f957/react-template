@@ -2,10 +2,18 @@ import React, { Component } from 'react'
 
 export default class Radio extends Component {
 
-  constructor (props) {
-    super(props)
+  constructor ({defaultValue}) {
+    super(arguments[0])
     this.state = {
-      value: props.value,
+      value: defaultValue,
+    }
+  }
+
+  componentWillReceiveProps ({value}) {
+    if (value !== this.props.value) {
+      const {onChange} = this.props
+      this.setState({value})
+      return onChange && onChange(value)
     }
   }
 
@@ -15,22 +23,27 @@ export default class Radio extends Component {
   }
 
   render () {
-    const {data/*array*/, color = 'info', className: classNames = ''} = this.props
+    const {data/*array*/, color = 'info', className: classNames = '', ...otherProps} = this.props
     return (
       <div className={`control is-inline ${classNames}`}>
         {
-          data.map(({label, value, disabled, className = ''}, index) => (
+          data.map(({label, value, disabled, className = '', key}, index) => (
             <div className={`
-                is-inline
+                radio
                 has-text-${this.state.value === value ? color : 'grey'}
                 ${className}
                 `}
                  style={{marginLeft: index ? '0.5em' : 0}}
                  onClick={() => !disabled && this.handelClick(value)}
-                 key={`radio-${index}`}
+                 key={`radio-${key || index}`}
+                 {...otherProps}
             >
-              <i className="fas dot-circle"/>
-              <span className="has-text-black">{label}</span>
+              <i className={`
+              fas
+              ${this.state.value === value ? 'fa-dot-circle' : 'fa-circle'}
+              `} style={{fontWeight: this.state.value === value ? 900 : 500}}/>
+              <span className="has-text-black"
+                    style={{marginLeft: 3.5}}>{label}</span>
             </div>
           ))
         }

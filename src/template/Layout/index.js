@@ -47,3 +47,4 @@ export default class Layout extends Component {
 
 export { default as Level } from './Level'
 export { default as Media } from './Media'
+export { default as Footer } from './Footer'

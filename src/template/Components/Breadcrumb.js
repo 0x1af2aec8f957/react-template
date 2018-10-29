@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import NavBar from './NavBar'
 
 export default class Breadcrumb extends Component {
 
   static Item ({active/*bool*/, className = '', ...otherProps}) {
     return (
-      <li className={`${active ? 'is-active' : ''} ${className}`}
-          {...otherProps}/>
+      <li className={`${active ? 'is-active' : ''} ${className}`}>
+        <NavBar.Link {...otherProps}/>
+      </li>
     )
   }
 
