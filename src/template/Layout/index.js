@@ -31,10 +31,11 @@ export default class Layout extends Component {
   }
 
   render () {
-    const {size/*medium|large|fullheight*/, bold, className: classNames = '', ...otherProps} = this.props
+    const {size/*medium|large|fullheight*/, bold, color, className: classNames = '', ...otherProps} = this.props
     const className = `
     hero 
     ${size ? `is-${size}` : ''} 
+    ${color ? `is-${color}` : ''} 
     ${bold ? 'is-bold' : ''} 
     ${classNames}
     `

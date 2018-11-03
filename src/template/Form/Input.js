@@ -6,8 +6,8 @@ const enterMethod = (event, method) => event.keyCode === 13 && method &&
 function Field ({
                   prefix/*image icons*/,
                   suffix/*image icons*/,
-                  addonAfter/*ReactNode*/,
-                  addonBefore/*ReactNode*/,
+                  addonafter/*ReactNode*/,
+                  addonbefore/*ReactNode*/,
                   size,
                   expand,
                   color/*primary|info|success|warning|danger*/,
@@ -26,11 +26,11 @@ function Field ({
   }
 
   return (
-    <div className={`field ${addonAfter || addonBefore ? 'has-addons' : ''}`}>
+    <div className={`field ${addonafter || addonbefore ? 'has-addons' : ''}`}>
       {
-        addonBefore && (
+        addonbefore && (
           <div className="control">
-            {addonBefore}
+            {addonbefore}
           </div>
         )
       }
@@ -53,9 +53,9 @@ function Field ({
         }
       </div>
       {
-        addonAfter && (
+        addonafter && (
           <div className="control">
-            {addonAfter}
+            {addonafter}
           </div>
         )
       }
@@ -64,7 +64,7 @@ function Field ({
 }
 
 const getInputProps = (
-  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, className, ...otherProps},
+  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className = '', ...otherProps},
   tag = 'input') => ({
   className: `
       ${tag} 
@@ -81,38 +81,43 @@ const getInputProps = (
   id,
   type,
   readOnly,
-  value: defaultValue,
+  value,
+  defaultValue,
   ...otherProps,
 })
 
 export default class Input extends Component {
 
-  static TextArea (props){return (
-    <Field {...props}>
+  static TextArea (props) {
+    return (
+      <Field {...props}>
       <textarea {...getInputProps(props, 'textarea')}
                 rows={props.rows/*height[Number]*/}/>
-    </Field>
-  )}
+      </Field>
+    )
+  }
 
-  static Select (props){return (
-    <Field {...props}>
-      <div {...getInputProps(
-        {...props, className: `${props.multiple ? 'is-multiple' : ''}`},
-        'select')}>
-        <select multiple={props.multiple}
-                {...getInputProps(props, 'select')}
+  static Select (props) {
+    return (
+      <Field {...props}>
+        <div {...getInputProps(
+          {...props, className: `${props.multiple ? 'is-multiple' : ''}`},
+          'select')}>
+          <select multiple={props.multiple}
+                  {...getInputProps(props, 'select')}
 
-        >
-          {props.option.map(({label, value, key}, index) => (
-            <option value={value}
-                    key={`${`option-${value}-${index}-${key}`}`}>{label}</option>),
-          )}
-        </select>
-      </div>
-    </Field>
-  )}
+          >
+            {props.option.map(({label, value, key}, index) => (
+              <option value={value}
+                      key={`${`option-${value}-${index}-${key}`}`}>{label}</option>),
+            )}
+          </select>
+        </div>
+      </Field>
+    )
+  }
 
-  static Search ({placeholder, onChange, onSearch, label, color/*按钮颜色*/, expand, ...otherProps}) {
+  static Search ({placeholder, defaultValue, value, onChange, onSearch, label, children, addons/*bool*/, color/*按钮颜色*/, expand, ...otherProps}) {
     let inputValue = ''
 
     function valueChange (event) {
@@ -121,18 +126,22 @@ export default class Input extends Component {
     }
 
     return (
-      <div className={`field has-addons ${expand ? 'is-grouped' : ''}`}>
+      <div className={`field ${addons ? 'has-addons' : ''} ${expand
+        ? 'is-grouped'
+        : ''}`}>
         <div className={`control ${expand ? 'is-expanded' : ''}`}>
           <input className="input" type="text"
                  placeholder={placeholder}
                  onKeyDown={event => enterMethod(event, onSearch)}
                  onChange={valueChange}
+                 defaultValue={defaultValue}
+                 value={value}
                  {...otherProps}/>
         </div>
         <div className="control">
           <button className={`button is-${color}`}
                   onClick={() => onSearch && onSearch(inputValue)}>
-            {label}
+            {label || children}
           </button>
         </div>
       </div>

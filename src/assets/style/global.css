@@ -135,7 +135,14 @@
 }
 
 .radio,
-.checkbox {
+.checkbox,
+.select {
     margin-left: 0;
     margin-right: 1.11em;
+}
+
+label.is-required::before {
+    content: "*";
+    color: #ff3860;
+    margin-right: .25em;
 }

@@ -20,7 +20,21 @@ class Header extends Component {
 
   render () {
     const {className = '', ...otherProps} = this.props
-    return (<header className={`card-header ${className}`} {...otherProps}/>)
+    return (<div className={`card-header ${className}`} {...otherProps}/>)
+  }
+}
+
+class Footer extends Component {
+
+  static Item ({className = '', ...otherProps}) {
+    return (
+      <div className={`card-footer-item ${className}`} {...otherProps}/>
+    )
+  }
+
+  render () {
+    const {className = '', ...otherProps} = this.props
+    return (<div className={`card-footer ${className}`} {...otherProps}/>)
   }
 }
 
@@ -42,11 +56,7 @@ export default class Card extends Component {
     )
   }
 
-  static Footer ({className = '', ...otherProps}) {
-    return (
-      <footer className={`card-footer ${className}`} {...otherProps}/>
-    )
-  }
+  static Footer = Footer
 
   render () {
     const {className = '', ...otherProps} = this.props

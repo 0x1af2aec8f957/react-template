@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Icon from '../Components/Icon'
 
 export default class Elements extends Component {
-  static Buttons ({className = '', align/*centered|right*/,addons, ...otherProps}) {
+  static Buttons ({className = '', align/*centered|right*/, addons, ...otherProps}) {
     return (
       <div className={`
     buttons
@@ -12,20 +12,23 @@ export default class Elements extends Component {
     )
   }
 
-  static Button ({type, className = '', outline, disabled, invert, round, quiescent/*bool*/, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
+  static Button ({type, className = '', outline, fullWidth/*bool*/, disabled, invert, round, quiescent/*bool*/, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
     return (
       <button className={`
     button
     ${color ? `is-${color}` : ''}
     ${size ? `is-${size}` : ''}
-    ${status ? `is-${status}ed` : ''}
+    ${status ? `is-${status === 'loading' ? 'loading' : `${status}ed`}` : ''}
     ${outline ? 'is-outlined' : ''}
     ${disabled ? 'is-static' : ''}
     ${invert ? 'is-inverted' : ''}
     ${round ? 'is-rounded' : ''}
     ${quiescent ? 'is-static' : ''}
     ${className}
-    `} type={type} disabled={disabled} {...otherProps}/>
+    `}
+              type={type}
+              disabled={disabled}
+              style={{width: fullWidth ? '100%' : 'auto'}} {...otherProps}/>
     )
   }
 

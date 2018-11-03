@@ -25,9 +25,9 @@ export default class Level extends Component {
 
   render () {
     // A multi-purpose horizontal level, which can contain almost any other element
-    const {className = '', ...otherProps} = this.props
+    const {className = '', fullWidth, ...otherProps} = this.props
     return (
-      <div className={`level ${className}`} {...otherProps}/>
+      <div className={`level ${className}`} style={{width: fullWidth ? '100%' : 'auto'}} {...otherProps}/>
     )
   }
 }

@@ -5,11 +5,12 @@ const WRAPPED_LAYOUTS = ['horizontal'] // 需要Form自动处理的布局项
 
 class Field extends Component {
 
-  static Label ({className = '', size/*small|normal|medium|large*/, ...otherProps}) {
+  static Label ({className = '', required, size/*small|normal|medium|large*/, ...otherProps}) {
     return (
       <label className={`
         label
         ${size ? `is-${size}` : ''}
+        ${required ? 'is-required' : ''}
         ${className}
         `} {...otherProps}/>
     )
@@ -54,13 +55,13 @@ class Field extends Component {
   }
 
   render () {
-    const {className = '', layout/*horizontal*/, group, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
+    const {className = '', layout/*horizontal*/, group, required, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
 
     const son = React.Children.map(children, function ({type, props}) {
       const {size, ...otherProps} = props
       return type === Field.Label && WRAPPED_LAYOUTS.includes(layout) ? (
         <div className={`field-label ${size ? `is-${size}` : ''}`}
-             children={React.cloneElement(arguments[0], {...otherProps})}/>
+             children={React.cloneElement(arguments[0], {...otherProps, required})}/>
       ) : arguments[0]
     })
 
@@ -82,7 +83,7 @@ export default class Form extends Component {
   static Field = Field
 
   render () {
-    const {onSubmit, layout: layouts, children, ...otherProps} = this.props
+    const {onSubmit, layout: layouts/*horizontal*/, children, ...otherProps} = this.props
 
     const son = React.Children.map(children, function (/*child*/{type, props}) {
       const {layout} = props
@@ -112,3 +113,4 @@ export { default as Checkbox } from './Checkbox'
 export { default as Input } from './Input'
 export { default as Radio } from './Radio'
 export { default as UploadFile } from './UploadFile'
+export { default as Select } from './Select'
