@@ -6,8 +6,7 @@ import { Title } from '../../template/Elements'
 export default (props) => (
   <Layout.Content>
     <Layout.Container>
-      <Title.Subtitle className={styles['text-black']}>This page is
-        About</Title.Subtitle>
+      <Title.SubTitle className={styles['text-black']}>This page is About</Title.SubTitle>
       <strong className="has-text-grey">Relevant information:</strong>
       <pre>{JSON.stringify(props, null, 2)}</pre>
     </Layout.Container>

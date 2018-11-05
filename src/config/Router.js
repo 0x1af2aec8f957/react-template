@@ -14,9 +14,9 @@ import { Home, About } from '../components'
 const NoMatch = ({match, history}) => (
   <Layout.Content className="is-block">
     <Layout.Container>
-      <Title.Subtitle>
+      <Title.SubTitle>
         No match for <code className="has-text-danger">{match.path}</code>
-      </Title.Subtitle>
+      </Title.SubTitle>
       <div className="has-text-grey is-text">
         <p>
           <span>Operation&nbsp;&nbsp;_</span>
