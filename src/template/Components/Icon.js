@@ -1,13 +1,9 @@
 import React from 'react'
+import classNames from 'classnames'
 
-export default function Icon ({className = '', type = 'font-awesome-flag', ...otherProps}) {
+export default function Icon ({className, type = 'font-awesome-flag', ...otherProps}) {
   return (
     // doc link -> https://fontawesome.com/icons
-    <i className={`
-  fas
-  fab
-  ${type ? `fa-${type}` : ''}
-  ${className}
-  `} {...otherProps}/>
+    <i className={classNames('fas', 'fab', className, `fa-${type}`)} {...otherProps}/>
   )
 }

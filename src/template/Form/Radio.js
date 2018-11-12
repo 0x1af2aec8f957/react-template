@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Radio extends Component {
 
@@ -17,31 +18,24 @@ export default class Radio extends Component {
     }
   }
 
-  handelClick = (value) => {
+  handleClick = (value) => {
     const {onChange} = this.props
     this.setState({value}, () => onChange && onChange(value))
   }
 
   render () {
-    const {data/*array*/, color = 'info', className: classNames = '', ...otherProps} = this.props
+    const {data/*array*/, color = 'info', className: newClassName, ...otherProps} = this.props
     return (
-      <div className={`control is-inline ${classNames}`}>
+      <div className={classNames('control', 'is-inline', newClassName)}>
         {
-          data.map(({label, value, disabled, className = '', key}, index) => (
-            <div className={`
-                radio
-                has-text-${this.state.value === value ? color : 'grey'}
-                ${className}
-                `}
-                 style={{marginLeft: index ? '0.5em' : 0}}
-                 onClick={() => !disabled && this.handelClick(value)}
+          data.map(({label, value, disabled, className, key}, index) => (
+            <div className={classNames('radio', `has-text-${this.state.value === value ? color : 'grey'}`, className)}
+                 onClick={() => !disabled && this.handleClick(value)}
                  key={`radio-${key || index}`}
                  {...otherProps}
             >
-              <i className={`
-              fas
-              ${this.state.value === value ? 'fa-dot-circle' : 'fa-circle'}
-              `} style={{fontWeight: this.state.value === value ? 900 : 500}}/>
+              <i className={classNames('fas', this.state.value === value ? 'fa-dot-circle' : 'fa-circle')}
+                 style={{fontWeight: this.state.value === value ? 900 : 500}}/>
               <span className="has-text-black"
                     style={{marginLeft: 3.5}}>{label}</span>
             </div>

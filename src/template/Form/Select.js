@@ -1,16 +1,20 @@
 import React from 'react'
+import classNames from 'classnames'
 
-export default function Select ({className = '', value, defaultValue, disabled, children, option, multiple, size, color, round, status, ...otherProps}) {
+export default function Select ({className, value, defaultValue, disabled, children, option, multiple, size, color, round, status, ...otherProps}) {
   return (
-    <div className={`
-    select
-    ${multiple ? 'is-multiple' : ''}
-    ${color ? `is-${color}` : ''}
-    ${round ? `is-rounded` : ''}
-    ${round ? `is-${size}` : ''}
-    ${status ? `is-${status}` : ''}
-    ${className}
-    `}>
+    <div className={
+      classNames(
+        'select',
+        className,
+        {
+          'is-multiple': multiple,
+          [`is-${color}`]: color,
+          'is-rounded': round,
+          [`is-${size}`]: size,
+          [`is-${status}`]: status,
+        })
+    }>
       <select multiple={multiple}
               disabled={disabled}
               defaultValue={defaultValue}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Modal extends Component {
 
@@ -9,7 +10,7 @@ export default class Modal extends Component {
     }
   }
 
-  handelClose = (closeType = true) => {
+  handleClose = (closeType = true) => {
     const {onClose} = this.props
     this.setState({
       showState: !this.state.showState,
@@ -17,27 +18,28 @@ export default class Modal extends Component {
   }
 
   render () {
-    const {className = '', mode/*card*/, title, onOk, OnCancel, ...otherProps} = this.props
+    const {className, mode/*card*/, title, onOk, OnCancel, ...otherProps} = this.props
     return (
       this.state.showState && (
-        <div className={`modal ${className}`}>
-          <div className="modal-background" onClick={this.handelClose}/>
+        <div className={classNames('modal', className)}>
+          <div className="modal-background" onClick={this.handleClose}/>
           {
             mode === 'card' ? (
               <div className="modal-card">
                 <header className="modal-card-head">
                   <p className="modal-card-title">{title}</p>
-                  <button className="delete" aria-label="close"
-                          onClick={this.handelClose}/>
+                  <button className="delete"
+                          aria-label="close"
+                          onClick={this.handleClose}/>
                 </header>
                 <section className="modal-card-body" {...otherProps}/>
                 <footer className="modal-card-foot">
                   <button className="button is-success"
-                          onClick={() => onOk() && this.handelClose(false)}>
+                          onClick={() => onOk() && this.handleClose(false)}>
                     确定
                   </button>
                   <button className="button"
-                          onClick={() => OnCancel() && this.handelClose(false)}>
+                          onClick={() => OnCancel() && this.handleClose(false)}>
                     取消
                   </button>
                 </footer>
@@ -48,7 +50,7 @@ export default class Modal extends Component {
           }
           {mode !== 'card' && (
             <button className="modal-close is-large" aria-label="close"
-                    onClick={this.handelClose}/>
+                    onClick={this.handleClose}/>
           )}
         </div>
       ))

@@ -147,6 +147,7 @@ module.exports = {
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.babelSrc,
+            exclude: [/joi-browser/],
             loader: require.resolve('babel-loader'),
             options: {
               

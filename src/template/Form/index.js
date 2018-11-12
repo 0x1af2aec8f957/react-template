@@ -1,35 +1,42 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 const DEFAULT_COLOR = 'info' // 默认选中的颜色
 const WRAPPED_LAYOUTS = ['horizontal'] // 需要Form自动处理的布局项
 
 class Field extends Component {
 
-  static Label ({className = '', required, size/*small|normal|medium|large*/, ...otherProps}) {
+  static Label ({className, required, size/*small|normal|medium|large*/, ...otherProps}) {
     return (
-      <label className={`
-        label
-        ${size ? `is-${size}` : ''}
-        ${required ? 'is-required' : ''}
-        ${className}
-        `} {...otherProps}/>
+      <label className={
+        classNames(
+          'label',
+          className,
+          {
+            [`is-${size}`]: size,
+            'is-required': required,
+          },
+        )} {...otherProps}/>
     )
   }
 
-  static Body ({className = '', ...otherProps}) {
+  static Body ({className, ...otherProps}) {
     return (
-      <div className={`field-body ${className}`} {...otherProps}/>)
+      <div className={classNames('field-body', className)} {...otherProps}/>)
   }
 
-  static Control ({className = '', expand, multiLine, align/*right|centered*/, ...otherProps}) {
+  static Control ({className, expand, multiLine, align/*right|centered*/, ...otherProps}) {
     return (
-      <div className={`
-      control
-      ${className}
-      ${multiLine ? 'is-grouped-multiline' : ''}
-      ${expand ? 'is-expanded' : ''}
-      ${align ? `is-grouped-${align}` : ''}
-      `} {...otherProps}/>
+      <div className={
+        classNames(
+          'control',
+          className,
+          {
+            'is-grouped-multiline': multiLine,
+            'is-expanded': expand,
+            [`is-grouped-${align}`]: align,
+          },
+        )} {...otherProps}/>
     )
   }
 
@@ -41,39 +48,44 @@ class Field extends Component {
     }
   }
 
-  handelChange = (value) => {
+  handleChange = (value) => {
     const {onChange} = this.props
     this.setState({value, color: DEFAULT_COLOR})
     onChange && onChange(value)
     // console.log(this.refs.saveInput)
   }
 
-  handelBlur = () => {
+  handleBlur = () => {
     const {rules = /[\S\s]/} = this.props
     this.setState(
       {color: rules.test(this.state.value) ? 'success' : 'danger'})
   }
 
   render () {
-    const {className = '', layout/*horizontal*/, group, required, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
+    const {className, layout/*horizontal*/, group, required, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
 
     const son = React.Children.map(children, function ({type, props}) {
       const {size, ...otherProps} = props
       return type === Field.Label && WRAPPED_LAYOUTS.includes(layout) ? (
-        <div className={`field-label ${size ? `is-${size}` : ''}`}
-             children={React.cloneElement(arguments[0], {...otherProps, required})}/>
+        <div className={classNames('field-label', size && `is-${size}`)}
+             children={React.cloneElement(arguments[0],
+               {...otherProps, required})}/>
       ) : arguments[0]
     })
 
     return (
-      <div className={`
-      field
-      ${group ? 'is-grouped' : ''}
-      ${addons ? 'has-addons' : ''}
-      ${narrow ? 'is-narrow' : ''}
-      ${layout ? `is-${layout}` : ''}
-      ${className}
-      `} children={son} {...fieldProps}/>
+      <div className={
+        classNames(
+          'field',
+          className,
+          {
+            'is-grouped': group,
+            'has-addons': addons,
+            'is-narrow': narrow,
+            [`is-${layout}`]: layout,
+
+          },
+        )} children={son} {...fieldProps}/>
     )
   }
 }
@@ -86,10 +98,9 @@ export default class Form extends Component {
     const {onSubmit, layout: layouts/*horizontal*/, children, ...otherProps} = this.props
 
     const son = React.Children.map(children, function (/*child*/{type, props}) {
-      const {layout} = props
       return type === Field
         ? React.cloneElement(arguments[0], {
-          layout: layout || layouts,
+          layout: props.layout || layouts,
         })
         : arguments[0]
     })

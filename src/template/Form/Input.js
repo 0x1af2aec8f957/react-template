@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 const enterMethod = (event, method) => event.keyCode === 13 && method &&
   method(event.target.value)
@@ -14,19 +15,24 @@ function Field ({
                   status/*normal|hover|focus|loading*/,
                   help,
                   children,
+                  narrow = true/*bool*/,
                 }) {
   const controlProps = {
-    className: `
-    ${status === 'loading' ? 'is-loading' : ''} 
-    control 
-    ${size ? `is-${size}` : ''}
-    ${expand ? 'is-expanded' : ''}
-    ${`${prefix ? 'has-icons-left' : ''} ${suffix ? 'has-icons-right' : ''} `}
-      `,
+    className: classNames(
+      'control',
+      {
+        'is-loading': status === 'loading',
+        [`is-${size}`]: size,
+        'is-expanded': expand,
+        'has-icons-left': prefix,
+        'has-icons-right': suffix,
+      },
+    ),
   }
 
   return (
-    <div className={`field ${addonafter || addonbefore ? 'has-addons' : ''}`}>
+    <div className={classNames('field',
+      {'has-addons': addonafter || addonbefore, 'is-narrow': narrow})}>
       {
         addonbefore && (
           <div className="control">
@@ -64,16 +70,14 @@ function Field ({
 }
 
 const getInputProps = (
-  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className = '', ...otherProps},
+  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className, ...otherProps},
   tag = 'input') => ({
-  className: `
-      ${tag} 
-      ${className}
-      ${round ? 'is-rounded' : ''}
-      ${status && status !== 'loading' ? `is-${status}ed` : ''}
-      ${size ? `is-${size}` : ''}
-      ${color ? `is-${color}` : ''}
-      `,
+  className: classNames(tag, className, {
+    'is-rounded': round,
+    [`is-${status}ed`]: status && status !== 'loading',
+    [`is-${size}`]: size,
+    [`is-${color}`]: color,
+  }),
   disabled,
   placeholder,
   onChange,
@@ -101,7 +105,7 @@ export default class Input extends Component {
     return (
       <Field {...props}>
         <div {...getInputProps(
-          {...props, className: `${props.multiple ? 'is-multiple' : ''}`},
+          {...props, className: classNames(props.multiple && 'is-multiple')},
           'select')}>
           <select multiple={props.multiple}
                   {...getInputProps(props, 'select')}
@@ -126,10 +130,9 @@ export default class Input extends Component {
     }
 
     return (
-      <div className={`field ${addons ? 'has-addons' : ''} ${expand
-        ? 'is-grouped'
-        : ''}`}>
-        <div className={`control ${expand ? 'is-expanded' : ''}`}>
+      <div className={classNames('field', addons && 'has-addons',
+        expand && 'is-grouped')}>
+        <div className={classNames('control', expand && 'is-expanded')}>
           <input className="input" type="text"
                  placeholder={placeholder}
                  onKeyDown={event => enterMethod(event, onSearch)}
@@ -139,7 +142,7 @@ export default class Input extends Component {
                  {...otherProps}/>
         </div>
         <div className="control">
-          <button className={`button is-${color}`}
+          <button className={classNames('button', color && `is-${color}`)}
                   onClick={() => onSearch && onSearch(inputValue)}>
             {label || children}
           </button>

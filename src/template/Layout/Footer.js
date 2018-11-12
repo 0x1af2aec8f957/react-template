@@ -1,7 +1,8 @@
 import React from 'react'
+import classNames from 'classnames'
 
-export default function Footer ({className = '', ...otherProps}) {
+export default function Footer ({className, ...otherProps}) {
   return (
-    <footer className={`footer ${className}`} {...otherProps}/>
+    <footer className={classNames('footer', className)} {...otherProps}/>
   )
 }

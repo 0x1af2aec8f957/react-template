@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Notification extends Component {
   constructor ({defaultShowState/*bool*/}) {
@@ -8,7 +9,7 @@ export default class Notification extends Component {
     }
   }
 
-  handelClick () {
+  handleClick () {
     const {onClose} = this.props
     this.setState({
       showState: !this.state.showState,
@@ -16,12 +17,11 @@ export default class Notification extends Component {
   }
 
   render () {
-    const {color/*primary|link|info|success|warning|danger*/, className = '', children} = this.props
+    const {color/*primary|link|info|success|warning|danger*/, className, children} = this.props
     return (
       this.state.showState && (
-        <div
-          className={`notification ${color ? `is-${color}` : ''} ${className}`}>
-          <button className="delete" onClick={this.handelClick}/>
+        <div className={classNames('notification', color && `is-${color}`, className)}>
+          <button className="delete" onClick={this.handleClick}/>
           {children}
         </div>
       )

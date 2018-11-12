@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Pagination extends Component {
 
@@ -12,17 +13,19 @@ export default class Pagination extends Component {
   }
 
   render () {
-    const {hideOnSinglePage = true, round/*bool*/, size/*small|medium|large*/, className = ''} = this.props
+    const {hideOnSinglePage = true, round/*bool*/, size/*small|medium|large*/, className} = this.props
     return (
-      (!hideOnSinglePage ||
-        (this.state.total > this.state.pageSize)) &&
-      (
-        <div className={`
-        pagination
-        ${round ? 'is-rounded' : ''}
-        ${size ? `is-${size}` : ''}
-        ${className}
-        `} role="navigation" aria-label="pagination">
+      (!hideOnSinglePage || (this.state.total > this.state.pageSize)) && (
+        <div className={
+          classNames(
+            'pagination',
+            className,
+            {
+              'is-rounded': round,
+              [`is-${size}`]: size,
+
+            },
+          )} role="navigation" aria-label="pagination">
           <a className="pagination-previous"
              disabled={this.state.current <= 1}>上一页</a>
           <a className="pagination-next"

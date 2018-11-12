@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Checkbox extends Component {
   constructor ({defaultChecked/*bool*/}) {
@@ -16,7 +17,7 @@ export default class Checkbox extends Component {
     }
   }
 
-  handelClick = () => {
+  handleClick = () => {
     const {onChange} = this.props
     const {checkType} = this.state
     this.setState({checkType: !checkType},
@@ -24,18 +25,13 @@ export default class Checkbox extends Component {
   }
 
   render () {
-    const {disabled/*bool*/, label/*str*/, color = 'info', className = '', children, ...otherProps} = this.props
+    const {disabled/*bool*/, label/*str*/, color = 'info', className, children, ...otherProps} = this.props
     return (
-      <div className={`
-      checkbox
-      has-text-${this.state.checkType ? color : 'grey'}
-      ${className}
-      `} onClick={!disabled && this.handelClick} {...otherProps}
+      <div className={classNames('checkbox', `has-text-${this.state.checkType ? color : 'grey'}`, className)}
+           onClick={!disabled && this.handleClick} {...otherProps}
       >
-        <i className={`
-        fas
-        ${this.state.checkType ? 'fa-check-square' : 'fa-square'}
-        `} style={{fontWeight: this.state.checkType ? 900 : 500}}/>
+        <i className={classNames('fas', this.state.checkType ? 'fa-check-square' : 'fa-square')}
+           style={{fontWeight: this.state.checkType ? 900 : 500}}/>
         <span className="has-text-black"
               style={{marginLeft: 3.5}}>{label || children}</span>
       </div>

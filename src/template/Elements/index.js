@@ -1,104 +1,109 @@
 import React, { Component } from 'react'
 import Icon from '../Components/Icon'
+import classNames from 'classnames'
 
 export default class Elements extends Component {
-  static Buttons ({className = '', align/*centered|right*/, addons, ...otherProps}) {
+  static Buttons ({className, align/*centered|right*/, addons, ...otherProps}) {
     return (
-      <div className={`
-    buttons
-    ${addons ? 'has-addons' : ''}
-    ${align ? `is-${align}` : ''}
-    ${className}`} {...otherProps}/>
+      <div className={
+        classNames(
+          'buttons',
+          className,
+          {
+            'has-addons': addons,
+            [`is-${align}`]: align,
+          },
+        )} {...otherProps}/>
     )
   }
 
-  static Button ({type, className = '', outline, fullWidth/*bool*/, disabled, invert, round, quiescent/*bool*/, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
+  static Button ({type, className, outLine, fullWidth/*bool*/, disabled, invert, round, quiescent/*bool*/, status/*normal|hover|Focus|Active|Loading*/, size/*small|medium|large|normal*/, color/*white|light|dark|black|text|link|info|success|warning|danger|primary|*/, ...otherProps}) {
     return (
-      <button className={`
-    button
-    ${color ? `is-${color}` : ''}
-    ${size ? `is-${size}` : ''}
-    ${status ? `is-${status === 'loading' ? 'loading' : `${status}ed`}` : ''}
-    ${outline ? 'is-outlined' : ''}
-    ${disabled ? 'is-static' : ''}
-    ${invert ? 'is-inverted' : ''}
-    ${round ? 'is-rounded' : ''}
-    ${quiescent ? 'is-static' : ''}
-    ${className}
-    `}
-              type={type}
-              disabled={disabled}
+      <button className={
+        classNames(
+          'button',
+          className,
+          {
+            [`is-${color}`]: color,
+            [`is-${size}`]: size,
+            [`is-${status === 'loading' ? 'loading' : `${status}ed`}`]: status,
+            'is-outlined': outLine,
+            'is-static': disabled || quiescent,
+            'is-inverted': invert,
+            'is-rounded': round,
+          },
+        )} type={type} disabled={disabled}
               style={{width: fullWidth ? '100%' : 'auto'}} {...otherProps}/>
     )
   }
 
-  static Content ({className = '', size, ...otherProps}) {
+  static Content ({className, size, ...otherProps}) {
     return (
-      <div className={`
-    content
-    ${size ? `is-${size}` : ''}
-    ${className}
-    `} {...otherProps}/>
+      <div className={classNames('content', size && `is-${size}`, className)}
+           {...otherProps}/>
     )
   }
 
-  static Delete ({size, className = '', ...otherProps}) {
+  static Delete ({size, className, ...otherProps}) {
     return (
-      <button className={`
-    delete
-    ${size ? `is-${size}` : ''}
-    ${className}
-    `} {...otherProps}/>
+      <button className={classNames('delete', size && `is-${size}`, className)}
+              {...otherProps}/>
     )
   }
 
   static Icon ({size = 'small'/*small|medium|large*/, color/*info|success|warning|danger*/, type, ...otherProps}) {
     return (
-      <div className={`
-    icon
-    ${color ? `has-text-${color}` : ''}
-    ${size ? `is-${size}` : ''}
-    `}>
+      <div className={
+        classNames(
+          'icon',
+          {
+            [`has-text-${color}`]: color,
+            [`is-${size}`]: size,
+          })}>
         <Icon type={type} {...otherProps}/>
       </div>
     )
   }
 
-  static Image ({className = '', alt = '', round, size/*16x16|24x24|32x32|48x48|64x64|96x96|128x128|square|1by1|5by4|4by3|3by2|5by3|16by9|2by1|3by1|4by5|3by4|2by3|3by5|9by16|1by2|1by3*/, src, ...otherProps}) {
+  static Image ({className, alt = '', round, size/*16x16|24x24|32x32|48x48|64x64|96x96|128x128|square|1by1|5by4|4by3|3by2|5by3|16by9|2by1|3by1|4by5|3by4|2by3|3by5|9by16|1by2|1by3*/, src, ...otherProps}) {
     return (
-      <figure className={`
-    image
-    ${size ? `is-${size} ` : ''}
-    `} {...otherProps}>
-        <img className={`${round ? 'is-rounded' : ''} ${className}`}
+      <figure className={classNames('image', size && `is-${size}`)}
+              {...otherProps}>
+        <img className={classNames(round && 'is-rounded', className)}
              src={src || `https://bulma.io/images/placeholders/${size}.png`}
              alt={alt}/>
       </figure>
     )
   }
 
-  static Progress ({className = '', color/*primary|link|info|success|warning|danger*/, size/*small|medium|large*/, value = 50}) {
+  static Progress ({className, color/*primary|link|info|success|warning|danger*/, size/*small|medium|large*/, value = 50}) {
     return (
-      <progress className={`
-    progress
-    ${color ? `is=${color}` : ''}
-    ${size ? `is-${size}` : ''}
-    ${className}
-    `} value={value} max="100">{value}%</progress>
+      <progress className={
+        classNames(
+          'progress',
+          className,
+          {
+            [`is-${color}`]: color,
+            [`is-${size}`]: size,
+          },
+        )} value={value} max="100">{value}%</progress>
     )
   }
 
-  static Table ({className = '', fields = [], data = [], footer/*ReactNode*/, caption/*ReactNode*/, border/*bool*/, strip, narrow, hover, fullWidth}) {
+  static Table ({className, fields = [], data = [], footer/*ReactNode*/, caption/*ReactNode*/, border/*bool*/, strip, narrow, hover, fullWidth}) {
     return (
-      <table className={`
-    table
-    ${border ? 'is-bordered' : ''}
-    ${strip ? 'is-striped' : ''}
-    ${narrow ? 'is-narrow' : ''}
-    ${hover ? 'is-hoverable' : ''}
-    ${fullWidth ? 'is-fullwidth' : ''}
-    ${className}
-    `}>
+      <table className={
+        classNames(
+          'table',
+          className,
+          {
+            'is-bordered': border,
+            'is-striped': strip,
+            'is-narrow': narrow,
+            'is-hoverable': hover,
+            'is-fullwidth': fullWidth,
+          },
+        )}>
         {caption && (<caption>{caption}</caption>)}
         <thead>
         <tr>
@@ -112,7 +117,7 @@ export default class Elements extends Component {
         <tbody>
         {data.map((item/*{key,name,render}*/, index) => (
           <tr key={`table-body-${item.key || item.name}-${index}`}
-              className={item.className || ''}>
+              className={classNames(item.className)}>
             {fields.map((field/*{name, key}*/, reference) => (
               <td key={
                 `table-field-${index}-${field.key || field.name}-${reference}`
@@ -130,9 +135,9 @@ export default class Elements extends Component {
   }
 
   render () {
-    const {className = '', ...otherProps} = this.props
+    const {className, ...otherProps} = this.props
     return (
-      <div className={`box ${className}`} {...otherProps}/>
+      <div className={classNames('box', className)} {...otherProps}/>
     )
   }
 }

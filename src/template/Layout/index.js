@@ -1,44 +1,45 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Layout extends Component {
 
-  static Header ({className = '', ...otherProps}) {
+  static Header ({className, ...otherProps}) {
     return (
       // Hero content: will be in the top
-      <header className={`hero-head ${className}`} {...otherProps}/>
+      <header className={classNames('hero-head', className)} {...otherProps}/>
     )
   }
 
-  static Content ({className = '', ...otherProps}) {
+  static Content ({className, ...otherProps}) {
     return (
       // Hero content: will be in the middle
-      <div className={`hero-body ${className}`} {...otherProps}/>
+      <div className={classNames('hero-body', className)} {...otherProps}/>
     )
   }
 
-  static Footer ({className = '', ...otherProps}) {
+  static Footer ({className, ...otherProps}) {
     return (
       // Hero footer: will stick at the bottom
-      <footer className={`hero-foot ${className}`} {...otherProps}/>
+      <footer className={classNames('hero-foot', className)} {...otherProps}/>
     )
   }
 
-  static Container ({className = '', ...otherProps}) {
+  static Container ({className, ...otherProps}) {
     return (
       // A simple container to center your content horizontally
-      <div className={`container ${className}`} {...otherProps}/>
+      <div className={classNames('container', className)} {...otherProps}/>
     )
   }
 
   render () {
-    const {size/*medium|large|fullheight*/, bold, color, className: classNames = '', ...otherProps} = this.props
-    const className = `
-    hero 
-    ${size ? `is-${size}` : ''} 
-    ${color ? `is-${color}` : ''} 
-    ${bold ? 'is-bold' : ''} 
-    ${classNames}
-    `
+    const {size/*medium|large|fullheight*/, bold, color, className: newClassName, ...otherProps} = this.props
+    const className = classNames('hero', newClassName, {
+      [`is-${size}`]: size,
+      [`is-${color}`]: color,
+      'is-bold': bold,
+    })
+
+    delete otherProps.computedMatch
 
     return (
       <section className={className} {...otherProps}/>
