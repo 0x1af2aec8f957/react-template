@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 const DEFAULT_COLOR = 'info' // 默认选中的颜色
@@ -125,3 +126,38 @@ export { default as Input } from './Input'
 export { default as Radio } from './Radio'
 export { default as UploadFile } from './UploadFile'
 export { default as Select } from './Select'
+
+Field.propTypes = {
+  className: PropTypes.string,
+  layout: PropTypes.oneOf(['horizontal', 'block', 'inline', 'flex']),
+  initialValue: PropTypes.any,
+  group: PropTypes.bool,
+  required: PropTypes.bool,
+  addons: PropTypes.bool,
+  narrow: PropTypes.bool,
+  onChange: PropTypes.func,
+}
+
+Field.Label.propTypes = {
+  className: PropTypes.string,
+  required: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'normal', 'medium', 'large']),
+}
+
+Field.Body.propTypes = {
+  className: PropTypes.string,
+}
+
+Field.Control.propTypes = {
+  className: PropTypes.string,
+  expand: PropTypes.bool,
+  multiLine: PropTypes.bool,
+  align: PropTypes.oneOf(['right', 'centered']),
+}
+
+Form.propTypes = {
+  className: PropTypes.string,
+  layout: PropTypes.oneOf(['horizontal']),
+  narrow: PropTypes.bool,
+  onSubmit: PropTypes.func,
+}

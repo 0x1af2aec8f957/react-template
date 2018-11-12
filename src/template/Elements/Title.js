@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Title extends Component {
@@ -34,4 +35,39 @@ export default class Title extends Component {
         )} {...otherProps}/>
     )
   }
+}
+
+Title.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.oneOf([
+    'black',
+    'dark',
+    'light',
+    'white',
+    'primary',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger']),
+  align: PropTypes.oneOf(['right', 'centered']),
+  size: PropTypes.number,
+  spaced: PropTypes.number,
+}
+
+Title.SubTitle.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.oneOf([
+    'black',
+    'dark',
+    'light',
+    'white',
+    'primary',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger']),
+  align: PropTypes.oneOf(['right', 'centered']),
+  size: PropTypes.number,
 }

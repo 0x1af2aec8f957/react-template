@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Form, { Select } from '../../../template/Form'
 import addresses from './addresses'
 
@@ -86,4 +87,9 @@ export default class AddressSelect extends React.Component {
       </Form.Field.Control>
     )
   }
+}
+
+AddressSelect.propTypes={
+  defaultValue: PropTypes.object,
+  onChange: PropTypes.func
 }

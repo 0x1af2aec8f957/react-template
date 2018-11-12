@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Icon from '../Components/Icon'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import Icon from '../Components/Icon'
 
 export default class Elements extends Component {
   static Buttons ({className, align/*centered|right*/, addons, ...otherProps}) {
@@ -145,3 +146,118 @@ export default class Elements extends Component {
 export { default as Notification } from './Notification'
 export { default as Tag } from './Tag'
 export { default as Title } from './Title'
+
+Elements.propTypes = {
+  className: PropTypes.string,
+}
+
+Elements.Buttons.propTypes = {
+  className: PropTypes.string,
+  align: PropTypes.oneOf(['centered', 'right']),
+  addons: PropTypes.bool,
+}
+
+Elements.Button.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.string,
+  outLine: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+  disabled: PropTypes.bool,
+  round: PropTypes.bool,
+  quiescent: PropTypes.bool,
+  status: PropTypes.oneOf(['normal', 'hover', 'focus', 'active', 'loading']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'normal']),
+  color: PropTypes.oneOf([
+    'white',
+    'light',
+    'dark',
+    'black',
+    'text',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'primary']),
+}
+
+Elements.Content.propTypes = {
+  className: PropTypes.string,
+  size: PropTypes.number,
+}
+
+Elements.Delete.propTypes = {
+  className: PropTypes.string,
+  size: PropTypes.number,
+}
+
+Elements.Icon.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  color: PropTypes.oneOf(['info', 'success', 'warning', 'danger']),
+}
+
+Elements.Icon.defaultPropType = {
+  size: 'small',
+}
+
+Elements.Image.propTypes = {
+  className: PropTypes.string,
+  alt: PropTypes.string.isRequired,
+  round: PropTypes.bool,
+  size: PropTypes.oneOf([
+    '16x16',
+    '24x24',
+    '32x32',
+    '48x48',
+    '64x64',
+    '96x96',
+    '128x128',
+    'square',
+    '1by1',
+    '5by4',
+    '4by3',
+    '3by2',
+    '5by3',
+    '16by9',
+    '2by1',
+    '3by1',
+    '4by5',
+    '3by4',
+    '2by3',
+    '3by5',
+    '9by16',
+    '1by2',
+    '1by3']),
+  src: PropTypes.string,
+}
+
+Elements.Progress.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.oneOf(
+    ['primary', 'link', 'info', 'success', 'warning', 'danger']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  value: PropTypes.number,
+}
+
+Elements.Progress.defaultPropType = {
+  value: 50,
+}
+
+Elements.Table.propTypes = {
+  className: PropTypes.string,
+  fields: PropTypes.array.isRequired,
+  data: PropTypes.array,
+  footer: PropTypes.element,
+  caption: PropTypes.element,
+  border: PropTypes.bool,
+  narrow: PropTypes.bool,
+  strip: PropTypes.bool,
+  hover: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+}
+
+Elements.Table.defaultPropType = {
+  data: [],
+}

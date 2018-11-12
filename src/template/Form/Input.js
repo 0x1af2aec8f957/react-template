@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 const enterMethod = (event, method) => event.keyCode === 13 && method &&
@@ -70,7 +71,7 @@ function Field ({
 }
 
 const getInputProps = (
-  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className, ...otherProps},
+  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue = '', value, className, ...otherProps},
   tag = 'input') => ({
   className: classNames(tag, className, {
     'is-rounded': round,
@@ -158,4 +159,44 @@ export default class Input extends Component {
       </Field>
     )
   }
+}
+
+Input.Search.propTypes = Input.Select.propTypes = Input.TextArea.propTypes = Input.propTypes = {
+  prefix: PropTypes.string/*image icons*/,
+  suffix: PropTypes.string/*image icons*/,
+  addonafter: PropTypes.element/*ReactNode*/,
+  addonbefore: PropTypes.element/*ReactNode*/,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  expand: PropTypes.bool,
+  color: PropTypes.oneOf([
+    'primary',
+    'info',
+    'success',
+    'warning',
+    'danger'])/*primary|info|success|warning|danger*/,
+  status: PropTypes.oneOf(
+    ['normal', 'hover', 'focus', 'loading'])/*normal|hover|focus|loading*/,
+  help: PropTypes.string,
+  narrow: PropTypes.bool /*bool*/,
+  multiple: PropTypes.bool /*bool*/,
+  round: PropTypes.string,
+  disabled: PropTypes.bool,
+  rows: PropTypes.number,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  onPressEnter: PropTypes.func,
+  id: PropTypes.string,
+  type: PropTypes.string,
+  readOnly: PropTypes.bool,
+  defaultValue: PropTypes.any,
+  value: PropTypes.any,
+  className: PropTypes.string,
+  option: PropTypes.array,
+}
+
+Input.TextArea.defaultPropType = Input.defaultPropType = {
+  placeholder: 'Please input contents',
+  type: 'text',
+  narrow: true,
+  defaultValue: '',
 }

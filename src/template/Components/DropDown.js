@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 class Menu extends Component {
 
   static Item ({className, active, ...otherProps}) {
     return (
-      <div className={classNames('dropdown-item', active && 'is-active', className)}
+      <div className={classNames('dropdown-item', active && 'is-active',
+        className)}
            {...otherProps}/>
     )
   }
@@ -16,7 +18,8 @@ class Menu extends Component {
     const {className, ...otherProps} = this.props
     return (
       <div className="dropdown-menu" id="dropdown-menu" role="menu">
-        <div className={classNames('dropdown-content', className)} {...otherProps}/>
+        <div className={classNames('dropdown-content',
+          className)} {...otherProps}/>
       </div>
     )
   }
@@ -24,7 +27,7 @@ class Menu extends Component {
 
 export default class DropDown extends Component {
 
-  static Button ({className, children, direction = 'down'/*up*/, ...otherProps}) {
+  static Button ({className, children, direction /*up|down*/, ...otherProps}) {
     return (
       <div className="dropdown-trigger">
         <button className={classNames('button', className)}
@@ -60,4 +63,32 @@ export default class DropDown extends Component {
         )} {...otherProps}/>
     )
   }
+}
+
+Menu.propTypes = {
+  className: PropTypes.string,
+}
+
+DropDown.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
+  hover: PropTypes.bool,
+  align: PropTypes.oneOf(['right']),
+  direction: PropTypes.oneOf(['up']),
+
+}
+
+DropDown.Button.propTypes = {
+  className: PropTypes.string,
+  direction: PropTypes.oneOf(['up', 'down']),
+
+}
+
+Menu.Item.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
+}
+
+DropDown.Button.defaultProps = {
+  direction: 'down',
 }

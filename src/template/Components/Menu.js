@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import NavBar from './NavBar'
 
@@ -40,4 +41,13 @@ export default class Menu extends Component {
       <aside className={classNames('menu', className)} {...otherProps}/>
     )
   }
+}
+
+MenuList.propTypes = Menu.Label.propTypes = {
+  className: PropTypes.string,
+}
+
+Menu.propTypes = MenuList.Item.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
 }

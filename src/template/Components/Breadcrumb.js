@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import NavBar from './NavBar'
 
@@ -29,4 +30,16 @@ export default class Breadcrumb extends Component {
       </nav>
     )
   }
+}
+
+Breadcrumb.Item.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
+}
+
+Breadcrumb.propTypes = {
+  className: PropTypes.string,
+  align: PropTypes.oneOf(['centered', 'right']),
+  separator: PropTypes.oneOf(['arrow', 'bullet', 'dot', 'succeeds']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
 }

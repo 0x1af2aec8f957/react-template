@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 
 const switchClassList = (e) => {
@@ -9,22 +11,22 @@ const switchClassList = (e) => {
 }
 
 class Menu extends Component {
-  static Start ({className = '', ...otherProps}) {
+  static Start ({className, ...otherProps}) {
     return (
-      <div className={`navbar-start ${className}`} {...otherProps}/>
+      <div className={classNames('navbar-start', className)} {...otherProps}/>
     )
   }
 
-  static End ({className = '', ...otherProps}) {
+  static End ({className, ...otherProps}) {
     return (
-      <div className={`navbar-end ${className}`} {...otherProps}/>
+      <div className={classNames('navbar-end', className)} {...otherProps}/>
     )
   }
 
   render () { // 汉堡菜单
-    const {className = '', ...otherProps} = this.props
+    const {className, ...otherProps} = this.props
     return (
-      <div className={`navbar-menu ${className}`}
+      <div className={classNames('navbar-menu', className)}
            id="navbar-menu" {...otherProps}/>
     )
   }
@@ -32,9 +34,9 @@ class Menu extends Component {
 
 export default class NavBar extends Component {
 
-  static Brand ({className = '', ...otherProps}) {
+  static Brand ({className, ...otherProps}) {
     return (
-      <div className={`navbar-brand ${className}`} {...otherProps}/>
+      <div className={classNames('navbar-brand', className)} {...otherProps}/>
     ) // 导航栏左侧
   }
 
@@ -48,13 +50,10 @@ export default class NavBar extends Component {
 
   static Menu = Menu
 
-  static Item ({className = '', active, ...otherProps}) {
+  static Item ({className, active, ...otherProps}) {
     return (
-      <div className={`
-      navbar-item
-      ${active ? 'is-active' : ''}
-      ${className}
-      `} {...otherProps}/>
+      <div className={classNames('navbar-item', active && 'is-active',
+        className)} {...otherProps}/>
     )
   }
 
@@ -72,12 +71,15 @@ export default class NavBar extends Component {
 
   static Dropdown ({label, hover/*boll*/, box/*bool*/, direction/*right*/, dropDown/*up|down*/, className, ...otherProps}) {
     return (
-      <div className={`
-    navbar-item
-    has-dropdow
-    ${hover ? 'is-hoverable' : ''}
-    ${dropDown ? `has-dropdown-${dropDown}` : ''}
-      `}>
+      <div className={
+        classNames(
+          'navbar-item',
+          'has-dropdow',
+          {
+            'is-hoverable': hover,
+            [`has-dropdown-${dropDown}`]: dropDown,
+          })
+      }>
         <a className="navbar-link" onClick={
           event => !hover &&
             event.target.parentNode.classList.toggle('is-active')
@@ -85,26 +87,84 @@ export default class NavBar extends Component {
           {label}
         </a>
 
-        <div className={`
-      navbar-dropdown
-      ${box ? 'is-boxed' : ''}
-      ${direction ? `is-${direction}` : ''}
-      ${className}
-      `} {...otherProps}/>
+        <div className={
+          classNames(
+            'navbar-dropdown',
+            className,
+            {
+              'is-boxed': box,
+              [`is-${direction}`]: direction,
+            })
+        } {...otherProps}/>
       </div>
     )
   }
 
   render () {
-    const {transparent/*bool*/, className = '', direction/*top|bottom*/, color/*primary|link|info|success|warning|danger|black|dark|light|white*/, ...otherProps} = this.props
+    const {transparent/*bool*/, className, direction/*top|bottom*/, color/*primary|link|info|success|warning|danger|black|dark|light|white*/, ...otherProps} = this.props
     return (
-      <div className={`
-      navbar
-      ${color ? `is-${color}` : ''}
-      ${transparent ? 'is-transparent' : ''}
-      ${direction ? `is-fixed-${direction}` : ''}
-      ${className}
-      `} role="navigation" aria-label="main navigation" {...otherProps}/>
+      <div className={
+        classNames(
+          'navbar',
+          className,
+          {
+            [`is-${color}`]: color,
+            [`is-fixed-${direction}`]: direction,
+            'is-transparent': transparent,
+          },
+        )} role="navigation" aria-label="main navigation" {...otherProps}/>
     )
   }
+}
+
+Menu.propTypes = {
+  className: PropTypes.string,
+}
+
+Menu.Start.propTypes = {
+  className: PropTypes.string,
+}
+
+Menu.End.propTypes = {
+  className: PropTypes.string,
+}
+
+NavBar.propTypes = {
+  className: PropTypes.string,
+  transparent: PropTypes.bool,
+  direction: PropTypes.oneOf(['top', 'bottom']),
+  color: PropTypes.oneOf([
+    'primary',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'black',
+    'dark',
+    'light',
+    'white']),
+}
+
+NavBar.Brand.propTypes = {
+  className: PropTypes.string,
+}
+
+NavBar.Item.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
+}
+
+NavBar.Link.propTypes = {
+  path: PropTypes.string,
+  href: PropTypes.string,
+}
+
+NavBar.Dropdown.propTypes = {
+  className: PropTypes.string,
+  label: PropTypes.string,
+  hover: PropTypes.bool,
+  box: PropTypes.bool,
+  direction: PropTypes.oneOf(['right']),
+  dropDown: PropTypes.oneOf(['up', 'down']),
 }

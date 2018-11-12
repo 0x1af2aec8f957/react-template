@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Level extends Component {
@@ -32,4 +33,13 @@ export default class Level extends Component {
            style={{width: fullWidth ? '100%' : 'auto'}} {...otherProps}/>
     )
   }
+}
+
+Level.propTypes = {
+  className: PropTypes.string,
+  fullWidth: PropTypes.bool,
+}
+
+Level.Item.propTypes = Level.Left.propTypes = Level.Right.propTypes = {
+  className: PropTypes.string,
 }

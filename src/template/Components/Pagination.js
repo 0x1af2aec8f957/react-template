@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Pagination extends Component {
@@ -48,4 +49,15 @@ export default class Pagination extends Component {
       )
     )
   }
+}
+
+Pagination.propTypes = {
+  className: PropTypes.string,
+  hideOnSinglePage: PropTypes.bool,
+  round: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+}
+
+Pagination.defaultProps = {
+  hideOnSinglePage: true,
 }

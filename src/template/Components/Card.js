@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Icon from './Icon'
 import Elements from '../Elements'
@@ -7,7 +8,8 @@ class Header extends Component {
 
   static Title ({className, ...otherProps}) {
     return (
-      <div className={classNames('card-header-title', className)} {...otherProps}/>
+      <div
+        className={classNames('card-header-title', className)} {...otherProps}/>
     )
   }
 
@@ -30,7 +32,8 @@ class Footer extends Component {
 
   static Item ({className, ...otherProps}) {
     return (
-      <div className={classNames('card-footer-ite', className)} {...otherProps}/>
+      <div
+        className={classNames('card-footer-item', className)} {...otherProps}/>
     )
   }
 
@@ -67,4 +70,13 @@ export default class Card extends Component {
       <div className={classNames(className, 'card')} {...otherProps}/>
     )
   }
+}
+
+Header.propTypes = Footer.propTypes = Header.Title.propTypes = Footer.Item.propTypes = Card.propTypes = Card.Image.propTypes = Card.Content.propTypes = {
+  className: PropTypes.string,
+}
+
+
+Header.Icon.propTypes = {
+  type: PropTypes.string,
 }

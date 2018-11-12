@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Layout extends Component {
@@ -50,3 +51,14 @@ export default class Layout extends Component {
 export { default as Level } from './Level'
 export { default as Media } from './Media'
 export { default as Footer } from './Footer'
+
+Layout.propTypes = {
+  size: PropTypes.oneOf(['medium', 'large', 'fullheight']),
+  bold: PropTypes.bool,
+  color: PropTypes.string,
+  className: PropTypes.string,
+}
+
+Layout.Header.propTypes = Layout.Content.propTypes = Layout.Footer.propTypes = Layout.Container.propTypes = {
+  className: PropTypes.string,
+}

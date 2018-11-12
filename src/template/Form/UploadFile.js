@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class UploadFile extends Component {
@@ -21,7 +22,9 @@ export default class UploadFile extends Component {
     const {label = 'Choose a file…', size/*small|normal|medium|large*/, accept, color = 'info'} = this.props
     return (
       <div className="field">
-        <div className={classNames('file', `is-${color}`, 'has-name', 'is-boxed', size && `is-${size}`)}>
+        <div
+          className={classNames('file', `is-${color}`, 'has-name', 'is-boxed',
+            size && `is-${size}`)}>
           <label className="file-label">
             <input className="file-input" type="file"
                    onChange={this.handleChange}
@@ -42,4 +45,19 @@ export default class UploadFile extends Component {
       </div>
     )
   }
+}
+
+UploadFile.propTypes = {
+  label: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'normal', 'medium', 'large']),
+  accept: PropTypes.string,
+  color: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+}
+
+UploadFile.defaultPropType = {
+  label: 'Choose a file…',
+  color: 'info',
+  name: '...',
 }

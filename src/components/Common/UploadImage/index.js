@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Card } from '../../../template/Components'
 import Elements from '../../../template/Elements'
 
@@ -47,4 +48,55 @@ export default class UploadImage extends React.Component {
       </Card>
     )
   }
+}
+
+UploadImage.propTypes = {
+  label: PropTypes.string,
+  src: PropTypes.string,
+  size: PropTypes.oneOf([
+    '16x16',
+    '24x24',
+    '32x32',
+    '48x48',
+    '64x64',
+    '96x96',
+    '128x128',
+    'square',
+    '1by1',
+    '5by4',
+    '4by3',
+    '3by2',
+    '5by3',
+    '16by9',
+    '2by1',
+    '3by1',
+    '4by5',
+    '3by4',
+    '2by3',
+    '3by5',
+    '9by16',
+    '1by2',
+    '1by3']),
+  color: PropTypes.oneOf([
+    'white',
+    'light',
+    'dark',
+    'black',
+    'text',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'primary']),
+  alt: PropTypes.string,
+  defaultValue: PropTypes.object,
+  onChange: PropTypes.func,
+}
+
+UploadImage.defaultProps = {
+  src: '',
+  alt: 'cover',
+  size: 'square',
+  label: '上传图片',
 }

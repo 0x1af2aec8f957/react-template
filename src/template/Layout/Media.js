@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Media extends Component {
@@ -27,4 +28,8 @@ export default class Media extends Component {
       <article className={classNames('media', className)} {...otherProps}/>
     )
   }
+}
+
+Media.propTypes = Media.Left.propTypes = Media.Right.propTypes = Media.Content.propTypes = {
+  className: PropTypes.string,
 }

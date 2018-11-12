@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default function Select ({className, value, defaultValue, disabled, children, option, multiple, size, color, round, status, ...otherProps}) {
@@ -28,4 +29,18 @@ export default function Select ({className, value, defaultValue, disabled, child
       </select>
     </div>
   )
+}
+
+Select.propTypes = {
+  className: PropTypes.string,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  disabled: PropTypes.bool,
+  children: PropTypes.node,
+  option: PropTypes.array,
+  multiple: PropTypes.bool,
+  round: PropTypes.bool,
+  status: PropTypes.oneOf(['normal', 'hover', 'focus', 'loading']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  color: PropTypes.string,
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Tag extends Component {
@@ -24,4 +25,21 @@ export default class Tag extends Component {
         )} {...otherProps}/>
     )
   }
+}
+
+Tag.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.oneOf([
+    'black',
+    'dark',
+    'light',
+    'white',
+    'primary',
+    'link',
+    'info',
+    'success',
+    'warning',
+    'danger']),
+  size: PropTypes.oneOf(['medium', 'large']),
+  delete: PropTypes.bool,
 }

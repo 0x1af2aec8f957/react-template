@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Modal extends Component {
@@ -55,4 +56,14 @@ export default class Modal extends Component {
         </div>
       ))
   }
+}
+
+Modal.propTypes = {
+  className: PropTypes.string,
+  mode: PropTypes.oneOf(['card']),
+  title: PropTypes.string,
+  defaultShowState: PropTypes.bool,
+  onOk: PropTypes.func,
+  onClose: PropTypes.func,
+  OnCancel: PropTypes.func,
 }

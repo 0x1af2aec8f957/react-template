@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Tab extends Component {
@@ -28,4 +29,18 @@ export default class Tab extends Component {
       </div>
     )
   }
+}
+
+Tab.propTypes = {
+  className: PropTypes.string,
+  align: PropTypes.oneOf(['centered', 'right']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  mode: PropTypes.oneOf(['boxed', 'toggle']),
+  round: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+}
+
+Tab.Item.propTypes = {
+  className: PropTypes.string,
+  active: PropTypes.bool,
 }

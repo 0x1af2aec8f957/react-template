@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 export default class Notification extends Component {
@@ -20,11 +21,23 @@ export default class Notification extends Component {
     const {color/*primary|link|info|success|warning|danger*/, className, children} = this.props
     return (
       this.state.showState && (
-        <div className={classNames('notification', color && `is-${color}`, className)}>
+        <div className={classNames('notification', color && `is-${color}`,
+          className)}>
           <button className="delete" onClick={this.handleClick}/>
           {children}
         </div>
       )
     )
   }
+}
+
+Notification.propTypes = {
+  className: PropTypes.string,
+  defaultShowState: PropTypes.bool,
+  onClose: PropTypes.func,
+  color: PropTypes.oneOf(['primary', 'link', 'info', 'success', 'warning', 'danger']),
+}
+
+Notification.defaultPropType = {
+  defaultShowState: false,
 }
