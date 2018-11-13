@@ -65,7 +65,7 @@ class Field extends Component {
   render () {
     const {className, layout/*horizontal*/, group, required, children, addons/*bool*/, narrow/*bool*/, ...fieldProps} = this.props
 
-    const son = React.Children.map(children, function ({type, props}) {
+    const son = React.Children.map(children, function ({type, props = {}}) {
       const {size, ...otherProps} = props
       return type === Field.Label && WRAPPED_LAYOUTS.includes(layout) ? (
         <div className={classNames('field-label', size && `is-${size}`)}
@@ -98,7 +98,7 @@ export default class Form extends Component {
   render () {
     const {onSubmit, layout: layouts/*horizontal*/, children, ...otherProps} = this.props
 
-    const son = React.Children.map(children, function (/*child*/{type, props}) {
+    const son = React.Children.map(children, function (/*child*/{type, props = {}}) {
       return type === Field
         ? React.cloneElement(arguments[0], {
           layout: props.layout || layouts,

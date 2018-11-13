@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 
 class MenuList extends Component {
   static Item ({className, children, active, ...otherProps}) {
-    const son = React.Children.map(children, function ({type, props}) {
+    const son = React.Children.map(children, function ({type, props = {}}) {
       return type === NavBar.Link
         ? React.cloneElement(arguments[0], {
           ...props,
