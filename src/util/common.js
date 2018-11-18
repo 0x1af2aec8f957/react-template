@@ -2,10 +2,7 @@ import React from 'react'
 
 export const mergeProps = obj => ( // mapObjectToProps
   WrappedComponent => class extends React.Component {
-    constructor (props) {
-      super(props)
-      this.state = obj
-    }
+    state = obj
 
     call = async (func) => { // Execute asynchronous function
       return await func()
