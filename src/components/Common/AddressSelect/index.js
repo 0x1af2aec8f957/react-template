@@ -10,22 +10,22 @@ export default class AddressSelect extends React.Component {
     super(arguments[0])
 
     const provinceList = addresses.map(({name, ...other}) => ({label: name, value: name, ...other}))
-    let provinceIndex = provinceList.findIndex(province => province === defaultValue.province)
+    let provinceIndex = provinceList.findIndex(province => province.value === defaultValue.province)
     provinceIndex = provinceIndex <0 ? 0 : provinceIndex
 
     const cityList = provinceList[provinceIndex].city.map(({name, ...other}) => ({label: name, value: name, ...other}))
-    let cityIndex = cityList.findIndex(city => city === defaultValue.city) || 0
+    let cityIndex = cityList.findIndex(city => city.value === defaultValue.city)
     cityIndex = cityIndex <0 ? 0 : cityIndex
 
     const areaList = cityList[cityIndex].area.map(area => ({label: area, value: area}))
-    let areaIndex = areaList.findIndex(area => area === defaultValue.area) || 0
+    let areaIndex = areaList.findIndex(area => area.value === defaultValue.area)
     areaIndex = areaIndex <0 ? 0 : areaIndex
 
     this.state = {
       provinceList,
       cityList,
       areaList,
-      province: provinceList[provinceIndex].name,
+      province: provinceList[provinceIndex].value,
       city: provinceList[provinceIndex].city[cityIndex].name,
       area: provinceList[provinceIndex].city[cityIndex].area[areaIndex],
     }
@@ -75,14 +75,42 @@ export default class AddressSelect extends React.Component {
     )
   }
 
+  componentWillReceiveProps({value}){
+    if (value && value!==this.props.value) {
+      const provinceList = addresses.map(({name, ...other}) => ({label: name, value: name, ...other}))
+      let provinceIndex = provinceList.findIndex(province => province.value === value.province)
+      provinceIndex = provinceIndex <0 ? 0 : provinceIndex
+
+      const cityList = provinceList[provinceIndex].city.map(({name, ...other}) => ({label: name, value: name, ...other}))
+      let cityIndex = cityList.findIndex(city => city.value === value.city)
+      cityIndex = cityIndex <0 ? 0 : cityIndex
+
+      const areaList = cityList[cityIndex].area.map(area => ({label: area, value: area}))
+      let areaIndex = areaList.findIndex(area => area.value === value.area)
+      areaIndex = areaIndex <0 ? 0 : areaIndex
+
+      this.setState({
+        provinceList,
+        cityList,
+        areaList,
+        province: provinceList[provinceIndex].value,
+        city: provinceList[provinceIndex].city[cityIndex].name,
+        area: provinceList[provinceIndex].city[cityIndex].area[areaIndex],
+      })
+    }
+  }
+
   render () {
     return (
       <Form.Field.Control>
         <Select option={this.state.provinceList}
+                value={this.state.province}
                 onChange={this.handleProvinceChange}/>
         <Select option={this.state.cityList}
+                value={this.state.city}
                 onChange={this.handleCityChange}/>
         <Select option={this.state.areaList}
+                value={this.state.area}
                 onChange={this.handleAreaChange}/>
       </Form.Field.Control>
     )
@@ -91,5 +119,6 @@ export default class AddressSelect extends React.Component {
 
 AddressSelect.propTypes={
   defaultValue: PropTypes.object,
+  value: PropTypes.object,
   onChange: PropTypes.func
 }

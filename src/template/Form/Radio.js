@@ -13,9 +13,7 @@ export default class Radio extends Component {
 
   componentWillReceiveProps ({value}) {
     if (value !== this.props.value) {
-      const {onChange} = this.props
       this.setState({value})
-      return onChange && onChange(value)
     }
   }
 

@@ -12,9 +12,7 @@ export default class Checkbox extends Component {
 
   componentWillReceiveProps ({checked/*bool*/}) {
     if (checked !== this.props.checked) {
-      const {onChange} = this.props
       this.setState({checkType: checked})
-      return onChange && onChange(checked)
     }
   }
 

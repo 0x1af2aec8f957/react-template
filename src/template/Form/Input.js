@@ -71,7 +71,7 @@ function Field ({
 }
 
 const getInputProps = (
-  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue = '', value, className, ...otherProps},
+  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className, ...otherProps},
   tag = 'input') => ({
   className: classNames(tag, className, {
     'is-rounded': round,
@@ -144,7 +144,10 @@ export default class Input extends Component {
         </div>
         <div className="control">
           <button className={classNames('button', color && `is-${color}`)}
-                  onClick={() => onSearch && onSearch(inputValue)}>
+                  onClick={(event) => {
+                    event.preventDefault()
+                    onSearch && onSearch(inputValue)
+                  }}>
             {label || children}
           </button>
         </div>
@@ -173,7 +176,8 @@ Input.Search.propTypes = Input.Select.propTypes = Input.TextArea.propTypes = Inp
     'info',
     'success',
     'warning',
-    'danger'])/*primary|info|success|warning|danger*/,
+    'static',
+    'danger'])/*primary|info|success|warning|danger|static*/,
   status: PropTypes.oneOf(
     ['normal', 'hover', 'focus', 'loading'])/*normal|hover|focus|loading*/,
   help: PropTypes.string,
@@ -197,6 +201,5 @@ Input.Search.propTypes = Input.Select.propTypes = Input.TextArea.propTypes = Inp
 Input.TextArea.defaultPropType = Input.defaultPropType = {
   placeholder: 'Please input contents',
   type: 'text',
-  narrow: true,
-  defaultValue: '',
+  narrow: true
 }
