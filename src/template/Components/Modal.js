@@ -21,7 +21,7 @@ export default class Modal extends Component {
   render () {
     const {className, mode/*card*/, title, onOk, OnCancel, ...otherProps} = this.props
     return (
-      this.state.showState && (
+      this.state.showState ? (
         <div className={classNames('modal', className)}>
           <div className="modal-background" onClick={this.handleClose}/>
           {
@@ -54,7 +54,7 @@ export default class Modal extends Component {
                     onClick={this.handleClose}/>
           )}
         </div>
-      ))
+      ) : null)
   }
 }
 
