@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-const enterMethod = (event, method) => event.keyCode === 13 && method &&
-  method(event.target.value)
+const enterMethod = (event, method) => event.keyCode === 13 && method && method(event.target.value)
 
 function Field ({
                   prefix/*image icons*/,
@@ -71,8 +70,7 @@ function Field ({
 }
 
 const getInputProps = (
-  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className, ...otherProps},
-  tag = 'input') => ({
+  {round, status, size, color, disabled, placeholder = 'Please input contents', onChange, onPressEnter, id, type = 'text', readOnly, defaultValue, value, className, ...otherProps}, tag = 'input') => ({
   className: classNames(tag, className, {
     'is-rounded': round,
     [`is-${status}ed`]: status && status !== 'loading',
