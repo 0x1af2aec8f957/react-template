@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-function PaginationList ({pageTotal, pageSize, current, onChange}) {
+function PaginationList ({pageTotal, current, onChange}) {
 
   return (
     <ul className="pagination-list">
@@ -95,7 +95,6 @@ export default class Pagination extends Component {
                   onClick={() => this.handleChange(current + 1)}>Next
           </button>
           <PaginationList current={current}
-                          pageSize={pageSize}
                           pageTotal={pageTotal}
                           onChange={this.handleChange}/>
         </div>
