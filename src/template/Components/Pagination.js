@@ -2,9 +2,53 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+function PaginationList ({pageTotal, pageSize, current, onChange}) {
+
+  return (
+    <ul className="pagination-list">
+      {current > 1 && (<li>
+        <button className="pagination-link" onClick={() => onChange(1)}>1
+        </button>
+      </li>)}
+      {current > 4 && (<li>
+        <button className="pagination-ellipsis"
+                onClick={() => onChange(current - 4)}>&hellip;</button>
+      </li>)}
+      {current > 3 && (<li>
+        <button className="pagination-link"
+                onClick={() => onChange(current - 2)}>{current - 2}</button>
+      </li>)}
+      {current > 2 && (<li>
+        <button className="pagination-link"
+                onClick={() => onChange(current - 1)}>{current - 1}</button>
+      </li>)}
+      <li>
+        <button className="pagination-link is-current"
+                disabled>{current}</button>
+      </li>
+      {current < pageTotal - 1 && (<li>
+        <button className="pagination-link"
+                onClick={() => onChange(current + 1)}>{current + 1}</button>
+      </li>)}
+      {current < pageTotal - 2 && (<li>
+        <button className="pagination-link"
+                onClick={() => onChange(current + 2)}>{current + 2}</button>
+      </li>)}
+      {current < pageTotal - 3 && (<li>
+        <button className="pagination-ellipsis"
+                onClick={() => onChange(current + 4)}>&hellip;</button>
+      </li>)}
+      {current < pageTotal && (<li>
+        <button className="pagination-link"
+                onClick={() => onChange(pageTotal)}>{pageTotal}</button>
+      </li>)}
+    </ul>
+  )
+}
+
 export default class Pagination extends Component {
 
-  constructor ({total, pageSize, current}) {
+  constructor ({total = 1, defaultPageSize: pageSize = 1, defaultCurrent: current = 1}) {
     super(arguments[0])
     this.state = {
       total,
@@ -13,10 +57,24 @@ export default class Pagination extends Component {
     }
   }
 
+  componentWillReceiveProps ({pageSize, total, current}) {
+    pageSize !== this.props.pageSize && this.setState({pageSize})
+    total !== this.props.total && this.setState({total})
+    current !== this.props.current && this.setState({current})
+  }
+
+  handleChange = (pageCurrent) => {
+    const {onChange} = this.props
+    this.setState({current: pageCurrent})
+    onChange && onChange(pageCurrent)
+  }
+
   render () {
-    const {hideOnSinglePage = true, round/*bool*/, size/*small|medium|large*/, className} = this.props
+    const {hideOnSinglePage = true, round/*bool*/, size/*small|medium|large*/, align/*centered|right*/, className} = this.props
+    const {total, pageSize, current} = this.state
+    const pageTotal = Math.ceil(total / pageSize)
     return (
-      (!hideOnSinglePage || (this.state.total > this.state.pageSize)) && (
+      (!hideOnSinglePage || (total > pageSize)) ? (
         <div className={
           classNames(
             'pagination',
@@ -24,29 +82,24 @@ export default class Pagination extends Component {
             {
               'is-rounded': round,
               [`is-${size}`]: size,
+              [`is-${align}`]: align,
 
             },
           )} role="navigation" aria-label="pagination">
-          <a className="pagination-previous"
-             disabled={this.state.current <= 1}>上一页</a>
-          <a className="pagination-next"
-             disabled={this.state.current >= this.state.total}>下一页</a>
-          <ul className="pagination-list">
-            <li>
-              <a className="pagination-link is-current" aria-label="Page 1"
-                 aria-current="page">1</a>
-            </li>
-            <li><span className="pagination-ellipsis">&hellip;</span></li>
-            <li>
-              <a className="pagination-link" aria-label="Goto page 2">2</a>
-            </li>
-            <li><span className="pagination-ellipsis">&hellip;</span></li>
-            <li>
-              <a className="pagination-link" aria-label="Goto page 3">3</a>
-            </li>
-          </ul>
+          <button className="pagination-previous"
+                  disabled={current <= 1}
+                  onClick={() => this.handleChange(current - 1)}>Previous
+          </button>
+          <button className="pagination-next"
+                  disabled={current >= pageTotal}
+                  onClick={() => this.handleChange(current + 1)}>Next
+          </button>
+          <PaginationList current={current}
+                          pageSize={pageSize}
+                          pageTotal={pageTotal}
+                          onChange={this.handleChange}/>
         </div>
-      )
+      ) : null
     )
   }
 }
@@ -55,9 +108,18 @@ Pagination.propTypes = {
   className: PropTypes.string,
   hideOnSinglePage: PropTypes.bool,
   round: PropTypes.bool,
+  total: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  current: PropTypes.number,
+  defaultCurrent: PropTypes.number,
+  defaultPageSize: PropTypes.number,
+  onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
+  align: PropTypes.oneOf(['right', 'centered']),
 }
 
 Pagination.defaultProps = {
   hideOnSinglePage: true,
+  defaultPageSize: 1,
+  defaultCurrent: 1,
 }
