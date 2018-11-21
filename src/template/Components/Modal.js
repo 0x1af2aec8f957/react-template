@@ -15,11 +15,12 @@ export default class Modal extends Component {
     if (showState !== this.props.show) this.setState({showState})
   }
 
-  handleClose = (closeType = true) => {
+  handleClose = (closeType = true, func) => {
     const {onClose} = this.props
     this.setState({
       showState: !this.state.showState,
     }, () => closeType && onClose && onClose())
+    func && func()
   }
 
   render () {
@@ -39,11 +40,11 @@ export default class Modal extends Component {
               <section className="modal-card-body" {...otherProps}/>
               <footer className="modal-card-foot">
                 <button className="button is-success"
-                        onClick={() => onOk && onOk() && this.handleClose(false)}>
+                        onClick={() => onOk && onOk()}>
                   确定
                 </button>
                 <button className="button"
-                        onClick={() => onCancel && onCancel() && this.handleClose(false)}>
+                        onClick={() => this.handleClose(false, onCancel)}>
                   取消
                 </button>
               </footer>
@@ -66,7 +67,7 @@ Modal.propTypes = {
   mode: PropTypes.oneOf(['card']),
   title: PropTypes.string,
   defaultShow: PropTypes.bool,
-  show: PropTypes.symbol,
+  show: PropTypes.oneOfType([PropTypes.bool, PropTypes.symbol]),
   onOk: PropTypes.func,
   onClose: PropTypes.func,
   OnCancel: PropTypes.func,
