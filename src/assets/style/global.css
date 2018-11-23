@@ -154,17 +154,21 @@ label.is-required::before {
     margin-right: .25em;
 }
 
+.is-print {
+    display: none;
+}
+
 @media print {
     /* 全局的打印样式 */
     @page {
         size: A4 portrait;/* A4大小 纵向*/
     }
 
-    .hidden-print {
+    .is-no-print {
         display: none;
     }
 
-    .show-print {
+    .is-print {
         display: block;
     }
 }
