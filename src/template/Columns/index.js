@@ -36,26 +36,6 @@ export function Col ({size/*2-11*/, children, border, offset/*2-11*/, color/*whi
   )
 }
 
-export default [ // 屏幕适配,高阶函数。@params {React.Component}
-  'mobile',
-  'tablet',
-  'tablet-only',
-  'touch',
-  'desktop',
-  'desktop-only',
-  'widescreen',
-  'widescreen-only',
-  'fullhd',
-].reduce((acc, device,index,suffixes) => ({
-  ...acc,
-  [device.replace(/-*(\b\w)/g, (_, letter) => letter.toUpperCase())] ({type, props = {}}) {
-    return React.cloneElement(arguments[0],
-      {
-        className: classNames(props.className,...suffixes.map(suffix => suffix !== device && `is-hidden-${suffix}`/* :is-block-${device} */)),
-      })
-  },
-}), {})
-
 Row.propTypes = {
   gapLess: PropTypes.bool,
   multiLine: PropTypes.bool,
@@ -111,3 +91,5 @@ Col.propTypes = {
     'primary']),
   className: PropTypes.string,
 }
+
+export default null
