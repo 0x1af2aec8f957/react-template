@@ -48,7 +48,7 @@ export default [ // 屏幕适配,高阶函数。@params {React.Component}
   'fullhd',
 ].reduce((acc, device,index,suffixes) => ({
   ...acc,
-  [device.replace(/-(\b\w)/g, (_, letter) => letter.toUpperCase())] ({type, props = {}}) {
+  [device.replace(/-*(\b\w)/g, (_, letter) => letter.toUpperCase())] ({type, props = {}}) {
     return React.cloneElement(arguments[0],
       {
         className: classNames(props.className,...suffixes.map(suffix => suffix !== device && `is-hidden-${suffix}`/* :is-block-${device} */)),
