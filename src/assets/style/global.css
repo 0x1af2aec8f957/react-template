@@ -101,6 +101,11 @@ html, body {
     cursor: help
 }
 
+.is-cursor-pointer {
+    /*手指*/
+    cursor: pointer;
+}
+
 .is-overflow-x::-webkit-scrollbar, .is-overflow-y::-webkit-scrollbar {
     display: none
 }
