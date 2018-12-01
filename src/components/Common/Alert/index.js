@@ -16,7 +16,7 @@ export default class Alert extends React.Component {
   }
 
   render () {
-    const {children, size/*mall|medium|large*/, status/*success|info|danger|waring*/, className, onClose} = this.props
+    const {children, size/*mall|medium|large*/, status/*success|info|danger|warning*/, className, onClose} = this.props
     const color = status === 'error' ? 'danger' : status
     let wrapStyle = {
       marginBottom: '1.5rem',
@@ -35,7 +35,7 @@ export default class Alert extends React.Component {
         wrapStyle.backgroundColor = '#e6f7ff'
         wrapStyle.border = '1px solid #91d5ff'
         break
-      case 'waring':
+      case 'warning':
         type = 'exclamation-triangle'
         wrapStyle.backgroundColor = '#fffbe6'
         wrapStyle.border = '1px solid #ffe58f'
@@ -70,7 +70,7 @@ export default class Alert extends React.Component {
 
 Alert.propTypes = {
   size: PropTypes.oneOf(['mall', 'medium', 'large']),
-  status: PropTypes.oneOf(['success', 'info', 'error', 'waring']).isRequired,
+  status: PropTypes.oneOf(['success', 'info', 'error', 'warning']).isRequired,
   className: PropTypes.string,
   onClose: PropTypes.func,
 }
