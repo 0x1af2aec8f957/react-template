@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import ReactConfig from './config/React'
 import Routes from './config/Router'
 import './assets/style/global.css'
-import logo from './assets/images/logo.svg'
-import Elements, { Title } from './template/Elements'
 
 ReactConfig({ // TODO: Extended React.Component this
   msg: 'hello react app',
@@ -18,11 +16,7 @@ class App extends Component {
   }
 
   render () { // 组件渲染
-    return <Routes>
-      <Elements.Image className="animated rotateOut infinite" src={logo}
-                      alt="logo" style={{width: 150}}/>
-      <Title>{this.msg}</Title>
-    </Routes>
+    return <Routes/>
   }
 
   componentDidMount () { // 组件渲染之后调用，只调用一次

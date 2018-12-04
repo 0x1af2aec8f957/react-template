@@ -8,6 +8,7 @@ import {
 import Layout, { Level } from '../template/Layout'
 import Elements, { Title } from '../template/Elements'
 import { Home, About } from '../components'
+import logo from '../assets/images/logo.svg'
 
 // TODO:Example
 
@@ -30,37 +31,73 @@ const NoMatch = ({match, history}) => (
   </Layout.Content>
 )
 
+function LayoutComponent ({routes: newRoutes}) {
+  return (<Layout size="fullheight">
+    <Layout.Header>
+      <Level>
+        <Level.Item>
+          <Elements.Image className="animated rotateOut infinite" src={logo}
+                          alt="logo" style={{width: 150}}/>
+          <Title>hello react app</Title>
+        </Level.Item>
+      </Level>
+    </Layout.Header>
+    <Switch>
+      {newRoutes.map((route, index) => (
+        <RouteWithSubRoutes {...route} key={`newRoutes-${index}`}/>))}
+      <Route component={NoMatch}/>
+    </Switch>
+    <Layout.Footer>
+      <Layout.Container>
+        <Elements.Content>
+          <blockquote>
+            Go to <a
+            href="https://github.com/noteScript/react-template">React-template</a> to
+            see a detailed description of the problem.
+          </blockquote>
+        </Elements.Content>
+      </Layout.Container>
+    </Layout.Footer>
+  </Layout>)
+}
+
+// wrap <Route> and use this everywhere instead, then when
+// sub routes are added to any route it'll work
+const RouteWithSubRoutes = (route) => (<Route
+  path={route.path}
+  render={props => (
+    // pass the sub-routes down to keep nesting
+    <route.component {...props} routes={route.routes}/>
+  )}
+/>)
+
+const routes = [
+  {
+    path: '/',
+    component: LayoutComponent,
+    routes: [
+      {
+        path: '/home',
+        component: Home,
+      },
+      {
+        path: '/about',
+        component: About,
+      },
+    ],
+  }]
+
 export default class Routes extends Component {
   render () {
+    const {basename = '/'} = this.props
     return (
-      <Router basename="/">
+      <Router basename={basename}>
         {/*React.Children.only expected to receive a single React element child*/}
-        <Layout size="fullheight">
-          <Layout.Header>
-            <Level>
-              <Level.Item>
-                {this.props.children}
-              </Level.Item>
-            </Level>
-          </Layout.Header>
-          <Switch>
-            <Route path="/home" exact component={Home}/>
-            <Route path="/about" exact component={About}/>
-            {/*match 404*/}
-            <Route component={NoMatch}/>
-          </Switch>
-          <Layout.Footer>
-            <Layout.Container>
-              <Elements.Content>
-                <blockquote>
-                  Go to <a
-                  href="https://github.com/noteScript/react-template">React-template</a> to
-                  see a detailed description of the problem.
-                </blockquote>
-              </Elements.Content>
-            </Layout.Container>
-          </Layout.Footer>
-        </Layout>
+        <Switch>
+          {routes.map((route, index) => (
+            <RouteWithSubRoutes key={`routeWithSubRoutes-${index}`} {...route} />
+          ))}
+        </Switch>
       </Router>
     )
   }
