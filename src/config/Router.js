@@ -15,14 +15,11 @@ import logo from '../assets/images/logo.svg'
 const NoMatch = ({match, history}) => (
   <Layout.Content className="is-block">
     <Layout.Container>
-      <Title.SubTitle>
-        No match for <code className="has-text-danger">{match.path}</code>
-      </Title.SubTitle>
+      <Title.SubTitle>No match for <code className="has-text-danger">{match.path}</code></Title.SubTitle>
       <div className="has-text-grey is-text">
         <p>
           <span>Operation&nbsp;&nbsp;_</span>
-          <Elements.Button invert color="danger" onClick={history.goBack}>Go
-            Back</Elements.Button>
+          <Elements.Button invert color="danger" onClick={history.goBack}>Go Back</Elements.Button>
         </p>
         <strong className="has-text-grey">Relevant information:</strong>
         <pre>{JSON.stringify(match, null, 2)}</pre>
@@ -31,30 +28,21 @@ const NoMatch = ({match, history}) => (
   </Layout.Content>
 )
 
-function LayoutComponent ({routes: newRoutes}) {
+function LayoutComponent ({RouterView}) {
   return (<Layout size="fullheight">
     <Layout.Header>
       <Level>
         <Level.Item>
-          <Elements.Image className="animated rotateOut infinite" src={logo}
-                          alt="logo" style={{width: 150}}/>
+          <Elements.Image className="animated rotateOut infinite" src={logo} alt="logo" style={{width: 150}}/>
           <Title>hello react app</Title>
         </Level.Item>
       </Level>
     </Layout.Header>
-    <Switch>
-      {newRoutes.map((route, index) => (
-        <RouteWithSubRoutes {...route} key={`newRoutes-${index}`}/>))}
-      <Route component={NoMatch}/>
-    </Switch>
+    <RouterView/>
     <Layout.Footer>
       <Layout.Container>
         <Elements.Content>
-          <blockquote>
-            Go to <a
-            href="https://github.com/noteScript/react-template">React-template</a> to
-            see a detailed description of the problem.
-          </blockquote>
+          <blockquote>Go to <a href="https://github.com/noteScript/react-template">React-template</a> to see a detailed description of the problem.</blockquote>
         </Elements.Content>
       </Layout.Container>
     </Layout.Footer>
@@ -67,7 +55,12 @@ const RouteWithSubRoutes = (route) => (<Route
   path={route.path}
   render={props => (
     // pass the sub-routes down to keep nesting
-    <route.component {...props} routes={route.routes}/>
+    <route.component {...props} RouterView={() => (
+      route.routes ? (<Switch>
+        {route.routes.map((route, index) => (<RouteWithSubRoutes {...route} key={`routerView-${index}`}/>))}
+        <Route component={NoMatch}/>
+      </Switch>) : null
+    )}/>
   )}
 />)
 
