@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-export function Row ({children, gapLess, multiLine, border, color/*white|black|light|dark|white-bis|white-ter|grey-lighter|grey-light|grey|grey-dark|grey-darker|black-ter|black-bis|danger|warning|success|info|link|primary*/, className}) {
+export function Row ({children, gapLess, multiLine, border, color/*white|black|light|dark|white-bis|white-ter|grey-lighter|grey-light|grey|grey-dark|grey-darker|black-ter|black-bis|danger|warning|success|info|link|primary*/, className, ...otherProps}) {
 
   return (
     <div className={
@@ -13,13 +13,14 @@ export function Row ({children, gapLess, multiLine, border, color/*white|black|l
           'is-gapless': gapLess,
           'is-bordered': border,
           'is-multiline': multiLine,
-          [`has-background-${color}`]: color,
+          [`is-${color}`]: color,
+          'hero': color,
         },
-      )} children={children}/>
+      )} children={children} {...otherProps}/>
   )
 }
 
-export function Col ({size/*2-11*/, children, border, offset/*2-11*/, color/*white|black|light|dark|white-bis|white-ter|grey-lighter|grey-light|grey|grey-dark|grey-darker|black-ter|black-bis|danger|warning|success|info|link|primary*/, className}) {
+export function Col ({size/*2-11*/, children, border, offset/*2-11*/, color/*white|black|light|dark|white-bis|white-ter|grey-lighter|grey-light|grey|grey-dark|grey-darker|black-ter|black-bis|danger|warning|success|info|link|primary*/, className, ...otherProps}) {
   return (
     // As the grid can be divided into 12 columns
     <div className={
@@ -29,10 +30,11 @@ export function Col ({size/*2-11*/, children, border, offset/*2-11*/, color/*whi
         {
           [`is-${size}`]: size,
           'is-bordered': border,
-          [`has-background-${color}`]: color,
+          [`is-${color}`]: color,
+          'hero': color,
           [`is-offset-${offset}`]: offset,
         },
-      )} children={children}/>
+      )} children={children} {...otherProps}/>
   )
 }
 
