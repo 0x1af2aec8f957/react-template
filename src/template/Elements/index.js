@@ -124,7 +124,7 @@ export default class Elements extends Component {
                 `table-field-${index}-${field.key || field.name}-${reference}`
               }>
                 {field.render
-                  ? field.render(item[field.key], item)
+                  ? field.render(item[field.key], item, index)
                   : item[field.key]}
               </td>
             ))}
