@@ -41,7 +41,7 @@ export default class Alert extends React.Component {
         wrapStyle.border = '1px solid #ffe58f'
         break
       default:
-        type = 'times-octagon'
+        type = 'times-circle'
         wrapStyle.backgroundColor = '#fff1f0'
         wrapStyle.border = '1px solid #ffa39e'
         break
