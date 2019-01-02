@@ -43,3 +43,4 @@ export const mergeProps = obj => ( // mapObjectToProps
 export { default as Cookies } from 'cookies-js' // https://github.com/ScottHamper/Cookies
 export { default as Joi } from 'joi-browser' // https://github.com/hapijs/joi
 export { default as queryString }  from 'querystring' // https://nodejs.org/api/querystring.html
+export { default as psl } from 'psl' // https://github.com/wrangr/psl
