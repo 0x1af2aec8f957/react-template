@@ -4,10 +4,12 @@ import $util from 'em-util' // 仅ES6
 import * as $calc from 'js-calculation' // 兼容node
 // import $api from 'js-transmission'
 import axios from 'axios'
-import { Cookies } from '../util/common'
+import { Cookies, psl } from '../util/common'
 /* export default class extends React.Component {
   static styles = styles
 } */
+
+window.document.domain = psl.get(window.location.host) || 'localhost'
 
 const instance = axios.create({
   baseURL: '/project',
