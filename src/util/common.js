@@ -40,6 +40,30 @@ export const mergeProps = obj => ( // mapObjectToProps
   }
 )
 
+export const asyncComponent = ( // () => import('Component') <-代码分割&异步加载react组件
+
+  /**推荐升级react版本至v16.6，
+    *使用import React, { lazy, Suspense } from 'react'的方式实现需求，
+    *请参考：https://juejin.im/post/5c399394e51d4552411ac8a9
+   **/
+
+  importComponent => class AsyncComponent extends React.Component {
+    state = {
+      component: null,
+    }
+
+    async componentDidMount () {
+      const {default: Component} = await importComponent()
+      this.setState({
+        component: <Component {...this.props}/>,
+      })
+    }
+
+    render () {
+      return this.state.component
+    }
+  })
+
 export { default as Cookies } from 'cookies-js' // https://github.com/ScottHamper/Cookies
 export { default as Joi } from 'joi-browser' // https://github.com/hapijs/joi
 export { default as queryString }  from 'querystring' // https://nodejs.org/api/querystring.html
