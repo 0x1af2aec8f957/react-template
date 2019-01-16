@@ -9,8 +9,9 @@ import { Cookies, psl } from '../util/common'
   static styles = styles
 } */
 
-window.document.domain = psl.get(window.location.host) || 'localhost'
-
+if ( window !== window.top ) { // 是否被嵌套使用
+  window.document.domain = psl.get(window.location.host) || 'localhost'
+}
 const instance = axios.create({
   baseURL: '/project',
   // timeout: 1000,
