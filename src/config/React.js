@@ -21,7 +21,7 @@ const instance = axios.create({
   // Do something before request is sent
   return {
     ...config,
-    transformRequest: [function (data, headers) {
+    transformRequest: [function (data = {}, headers) {
       // Do whatever you want to transform the data
       return Object.entries(data).reduce((acc, cur) => acc.append(cur[0], cur[1]) || acc, new FormData());
     }]};
