@@ -1,0 +1,2 @@
+// Timed task
+module.exports = {}

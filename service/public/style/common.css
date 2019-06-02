@@ -1,0 +1,98 @@
+html, body {
+    width: 100%;
+    overflow: hidden;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    border-bottom: 1px dotted #dbdbdb;
+    border-top: 1px dotted #dbdbdb;
+    padding: 1rem 0;
+}
+
+.markdown-content img {
+    box-shadow: 0 0 3px rgba(10, 10, 10, .5);
+    cursor: zoom-in;
+}
+
+@media screen and (min-width: 1087px) {
+    .markdown-content img {
+        max-width: 50%;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 1087px) {
+    .mobile-hidden {
+        display: none !important;
+    }
+}
+
+.markdown-content {
+    padding: 3rem 1.5rem !important;
+}
+
+.markdown-content a {
+    color: #3273dc !important;
+}
+
+pre:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f1c9";
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    display: block;
+    font-size: 1em;
+    color: #a0a1a7;
+}
+
+.link-color {
+    color: #3273dc !important;
+}
+
+.padding-1rem {
+    padding: 1em !important;
+}
+
+.padding-right-half {
+    padding-right: .5em !important;
+}
+
+.padding-left-half {
+    padding-left: .5em !important;
+}
+
+.mask-layer {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.transition-all {
+    transition: all .25s ease-in-out;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
