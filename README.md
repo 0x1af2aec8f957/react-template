@@ -1,1 +1,1 @@
-#### A koa template
+#### A react template
