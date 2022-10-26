@@ -1,102 +1,56 @@
 {
   "name": "react-template",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "author": "0x23fd5097@gmail.com",
+  "license": "ISC",
   "private": true,
-  "dependencies": {
-    "autoprefixer": "7.1.6",
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.1.2",
-    "babel-preset-react-app": "^3.1.2",
-    "babel-runtime": "6.26.0",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
-    "css-loader": "^1.0.0",
-    "dotenv": "4.0.0",
-    "dotenv-expand": "4.2.0",
-    "em-util": "^1.1.6",
-    "eslint": "4.10.0",
-    "eslint-config-react-app": "^2.1.0",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.4.0",
-    "extract-text-webpack-plugin": "3.0.2",
-    "file-loader": "1.1.5",
-    "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
-    "js-calculation": "^1.0.0",
-    "js-transmission": "^1.1.6",
-    "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-loader": "2.0.8",
-    "promise": "8.0.1",
-    "qc-ui": "^0.1.3",
-    "raf": "3.4.0",
-    "react": "^16.5.1",
-    "react-dev-utils": "^5.0.2",
-    "react-dom": "^16.5.1",
-    "react-router-dom": "^4.3.1",
-    "resolve": "1.6.0",
-    "style-loader": "0.19.0",
-    "sw-precache-webpack-plugin": "0.11.4",
-    "url-loader": "0.6.2",
-    "webpack": "3.8.1",
-    "webpack-dev-server": "2.11.3",
-    "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
-  },
+  "description": "基于React+Webpack+Typescript项目模板",
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "serve": "parcel serve ./public/index.html  --log-level=info",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build ./public/index.html  --log-level=error --no-cache"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "targets": {
+    "frontend": {
+      "source": "/public/index.html"
+    },
+    "backend": {
+      "source": "/api/index.ts"
+    },
+    "default": {
+      "distDir": "./build",
+      "publicUrl": "/"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "cookies-js": "^1.2.3",
+    "dayjs": "^1.11.6",
+    "effector": "^22.3.0",
+    "effector-react": "^22.3.4",
+    "events": "^3.3.0",
+    "i18next": "^22.0.2",
+    "os-browserify": "^0.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.0.0",
+    "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
-    "ansi-regex": "^3.0.0"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node",
-      "mjs"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "@parcel/transformer-yaml": "2.7.0",
+    "@parcel/validator-typescript": "^2.7.0",
+    "@types/node": "^18.11.6",
+    "@types/react": "^18.0.23",
+    "@types/react-dom": "^18.0.7",
+    "ansi-regex": "^3.0.0",
+    "buffer": "^6.0.3",
+    "parcel": "^2.7.0",
+    "postcss": "^8.0.0",
+    "postcss-import": "^15.0.0",
+    "postcss-modules": "^4.3.0",
+    "postcss-url": "^10.1.3",
+    "process": "^0.11.10",
+    "typescript": "^4.8.4"
   }
 }
