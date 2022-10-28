@@ -31,6 +31,7 @@
     "effector-react": "^22.3.4",
     "events": "^3.3.0",
     "i18next": "^22.0.2",
+    "md5": "^2.3.0",
     "os-browserify": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@parcel/transformer-yaml": "2.7.0",
     "@parcel/validator-typescript": "^2.7.0",
+    "@types/md5": "^2.3.2",
     "@types/node": "^18.11.6",
     "@types/react": "^18.0.23",
     "@types/react-dom": "^18.0.7",

@@ -1,16 +1,9 @@
-import { useEffect, Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 // import { Router } from "react-router";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useRoutes,
-  useNavigate
-} from "react-router-dom";
 
 import App from './views/App';
 
+const NotFound = lazy(() => import('./views/NotFound'));
 const Home = lazy(() => import('./views/Home'));
 
 export default [
@@ -20,14 +13,14 @@ export default [
     element: <App />,
     children: [
       {
-        path: 'home',
-        element: <Suspense children={<Home />} />
+        path: '',
+        element: <Suspense children={<Home />} fallback={<>...</>}/>
       }
     ]
   },
   { path: "/test", element: <>Hello React.Router.Test!</> },
   // Not found routes work as you'd expect
-  // { path: "*", element: <NotFound /> },
+  { path: "*", element: <Suspense children={<NotFound />} fallback={<>...</>}/> }
 ]
 
 // export default () => (
@@ -39,14 +32,14 @@ export default [
 //         element: <App />,
 //         children: [
 //           {
-//             path: 'home',
-//             element: <Suspense children={<Home />} />
+//             path: '',
+//             element: <Suspense children={<Home />} fallback={<>...</>}/>
 //           }
 //         ]
 //       },
 //       { path: "/test", element: <></> },
 //       // Not found routes work as you'd expect
-//       // { path: "*", element: <NotFound /> },
+//       // { path: "*", element: <Suspense children={<NotFound />} fallback={<>...</>}/>,
 //   ]) 
 // }</>
 // );

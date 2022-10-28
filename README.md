@@ -1,4 +1,4 @@
-# search
+# react-template
 
 > A React.js template [Already eject].
 
@@ -8,7 +8,7 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 

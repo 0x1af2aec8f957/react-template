@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
+      "skipLibCheck": false,
       "noImplicitThis": false,
       "alwaysStrict": true,
+      "isolatedModules": true,
       "strictPropertyInitialization": false,
       "emitDecoratorMetadata": true,
       "noFallthroughCasesInSwitch": true,
       "target": "es5",
-      "module": "CommonJS",
+      "module": "esnext",
       "strict": true,
       "jsx": "preserve",
       "importHelpers": true,
@@ -38,6 +40,6 @@
       "src/**/*.vue",
     ],
     "exclude": [
-      "node_modules"
+      "node_modules/**/*"
     ]
   }
