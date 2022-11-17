@@ -5,6 +5,7 @@ import {createStore, createEvent} from 'effector'
 export const changeAddAge = createEvent<number>();
 /// state
 export const $userInfo = createStore({
-    age: 0
+    age: 0,
+    role: '*'
 })
 .on(changeAddAge, (state, params: number) => ({...state, age: state.age + params}));
