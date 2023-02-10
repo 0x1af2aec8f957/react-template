@@ -1,7 +1,7 @@
 @charset "UTF-8";
-@import "./bulma.css";
-@import "./animate.css";
-@import "./datepicker.css";
+// @import "./bulma.css";
+// @import "./animate.css";
+// @import "./datepicker.css";
 
 html, body {
     width: 100%;
@@ -13,38 +13,44 @@ html, body {
 #root {
     width: 100%;
     height: 100%;
-}
 
-* {
-    transition: all .18s ease;
+    &:-webkit-full-screen { // 全屏样式设置
+        object-fit: contain;
+        zoom: 1;
+
+        &::backdrop { // 全屏样式背景设置
+            zoom: 1;
+            background: #3e8ed0; // 全屏背景色，默认为黑色
+        }
+    }
 }
 
 .has-border-right {
-    border-right: 1px solid rgb(219, 219, 219)
+    border-right: thin solid rgb(219, 219, 219)
 }
 
 .has-border-left {
-    border-left: 1px solid rgb(219, 219, 219)
+    border-left: thin solid rgb(219, 219, 219)
 }
 
 .has-border-top {
-    border-top: 1px solid rgb(219, 219, 219)
+    border-top: thin solid rgb(219, 219, 219)
 }
 
 .has-border-bottom {
-    border-bottom: 1px solid rgb(219, 219, 219)
+    border-bottom: thin solid rgb(219, 219, 219)
 }
 
 .is-border {
-    border: 1px solid rgb(219, 219, 219)
+    border: thin solid rgb(219, 219, 219)
 }
 
 .column.is-bordered {
-    border-bottom: 1px solid rgb(219, 219, 219)
+    border-bottom: thin solid rgb(219, 219, 219)
 }
 
 .columns.is-bordered > .column + .column {
-    border-left: 1px solid rgb(219, 219, 219)
+    border-left: thin solid rgb(219, 219, 219)
 }
 
 .is-text-overflow {

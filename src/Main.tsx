@@ -5,7 +5,7 @@ import i18n from "i18next";
 import './setup/i18n-setup';
 import Routes from './setup/router-setup';
 
-import './assets/stylesheet/global.css';
+import './assets/stylesheet/global.scss';
 
 const App = () => {
   return (
