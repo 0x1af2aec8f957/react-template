@@ -35,3 +35,22 @@ declare global { // 声明进入全局命名空间的类型，或者增加全局
      */
     type NoInfer<T> = [T][T extends any ? 0 : never]
 }
+
+declare module 'csstype' { // 全局自定义样式属性
+    interface Properties {
+      // Add a missing property
+      // WebkitRocketLauncher?: string;
+  
+      // Add a CSS Custom Property
+      '--background-color'?: 'string';
+  
+      // Allow namespaced CSS Custom Properties
+      // [index: `--theme-${string}`]: any;
+      
+      // Allow any CSS Custom Properties
+      // [index: `--${string}`]: any;
+  
+      // ...or allow any other property
+      // [index: string]: any;
+    }
+}
