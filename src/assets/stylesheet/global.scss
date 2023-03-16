@@ -25,6 +25,14 @@ html, body {
     }
 }
 
+.is-width-auto {
+    width: fit-content;
+}
+
+.is-height-auto {
+    height: fit-content;
+}
+
 .is-marginless {
     margin: 0 !important;
 }
@@ -197,8 +205,10 @@ html, body {
     cursor: pointer;
 }
 
-.is-overflow-x::-webkit-scrollbar, .is-overflow-y::-webkit-scrollbar {
-    display: none
+.is-overflow-x, .is-overflow-y {
+    &::-webkit-scrollbar{
+        display: none;
+    }
 }
 
 .is-overflow-x {
@@ -231,10 +241,22 @@ html, body {
     background-origin: padding-box;
     background-clip: border-box;
     background-size: contain;
-}
 
-.is-background-cover {
-    background-size: cover !important;
+    &.is-background-attachment-scroll {
+        background-attachment: scroll;
+    }
+    
+    &.is-background-attachment-local {
+        background-attachment: local;
+    }
+    
+    &.is-background-attachment-fixed {
+        background-attachment: fixed;
+    }
+    
+    &.is-background-cover {
+        background-size: cover !important;
+    }
 }
 
 .radio,
@@ -268,3 +290,5 @@ label.is-required::before {
         display: block;
     }
 }
+
+// 自定义覆盖样式
