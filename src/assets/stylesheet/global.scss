@@ -267,12 +267,8 @@ html, body {
 }
 
 &:autofill { // 重置 input 自动填充样式
-    &:hover,
-    &:focus,
-    &:active {
-        transition-delay: 9999s;
-        transition-property: background-color, color, font-size;
-    }
+    transition-delay: 9999s;
+    transition-property: background-color, color, font-size;
 }
 
 label.is-required::before {
