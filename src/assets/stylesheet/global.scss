@@ -266,7 +266,7 @@ html, body {
     margin-right: 1.11em;
 }
 
-&:autofill { // 重置 input 自动填充样式
+input:autofill { // 重置 input 自动填充样式
     transition-delay: 9999s;
     transition-property: background-color, color, font-size;
 }
