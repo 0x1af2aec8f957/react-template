@@ -1,7 +1,8 @@
-import'react-i18next'; // 导入所有类型申明
-import http from 'axios';
-import { useTranslation, initReactI18next } from "react-i18next";
+/// i18next-doc: https://www.i18next.com
+/// react-i18next-doc: https://react.i18next.com
 import i18n from "i18next";
+import http from 'axios';
+import { initReactI18next } from "react-i18next";
 
 import zh_CN from '../lang/zh-CN.yml';
 import en_US from '../lang/en-US.yml';
@@ -24,20 +25,20 @@ const fallbackLocale/* FallbackLocale */ = (languages.includes(defaultNS)
     ? defaultNS
     : languages.find((lan: string) => lan.indexOf(defaultNS.split('-')[0]) > -1) ?? defaultNS) as keyof typeof resources;
 
-const i18nInstance = i18n
-.use(initReactI18next)
-.init({
-  lng: 'en',
-  ns: ['ns1', 'ns2'],
-  defaultNS,
-  resources,
-  // lng: defaultNS,
-  fallbackLng: defaultNS,
-  debug: !isProduction,
-  interpolation: {
-    escapeValue: false, // not needed for react as it escapes by default
-  }
-});
+i18n
+    .use(initReactI18next)
+    .init({ /// doc: https://www.i18next.com/overview/configuration-options
+        lng: fallbackLocale,
+        ns: languages,
+        defaultNS,
+        resources,
+        supportedLngs: languages,
+        fallbackLng: fallbackLocale,
+        debug: !isProduction,
+        interpolation: {
+        escapeValue: false, // not needed for react as it escapes by default
+        }
+    });
 
 // i18n.changeLanguage('en-US');
 
@@ -63,7 +64,7 @@ export function setI18nLanguage(lang: LangKeyString = fallbackLocale): Locale { 
     return language;
 }
 
-export default i18nInstance;
+export default i18n;
 
 declare module 'react-i18next' {
     // and extend them!
