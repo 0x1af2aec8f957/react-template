@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowArbitraryExtensions": false,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false,
     "noImplicitThis": false,
     "alwaysStrict": true,
