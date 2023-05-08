@@ -57,10 +57,11 @@ export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Para
         return callback(...reset)
             .then((result) => {
                 setStatus(Status.Done);
-                return result;
+                return Promise.resolve(result);
             })
             .catch(() => {
                 setStatus(Status.Fail);
+                return Promise.reject(error);
             });
     }, { // 附加状态
         pending,
