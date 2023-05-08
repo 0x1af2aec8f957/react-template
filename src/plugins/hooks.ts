@@ -54,6 +54,7 @@ export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Para
     return Object.assign((...reset: Parameters<typeof _callback>) => {
         if (status === Status.Pending) return Promise.reject(new Error('上次请求尚未完成，拒绝再次执行')); // 请求中不允许再次请求
 
+        setStatus(Status.Pending);
         return callback(...reset)
             .then((result) => {
                 setStatus(Status.Done);
