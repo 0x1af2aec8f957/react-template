@@ -317,3 +317,11 @@ export function throttleFunc(fn: (...arg: any[]) => any, time: number = 500): Re
         }, time/* 截流间距时间 */);
     };
 }
+
+/// JS任务队列执行文档: https://zh.javascript.info/event-loop
+export const nextTick = (callback: () => void) => Promise.resolve().then(() => { // 数据更新后的下一次DM更新后执行
+    const timer = setTimeout(() => {
+        callback();
+        clearTimeout(timer);
+    }, 20 /* 在React.hooks.useLayoutEffect之外使用时，需要该参数，hooks会破坏已经自定义的任务队列，将无法达到预期 */);
+});
