@@ -71,6 +71,22 @@ export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Para
     });
 }
 
+/// 跟usePromiseFx具备一样的功能，但是会自动请求给定的 Promise 方法并返回结果
+export function usePromiseValueFx<T> (_callback: Callback<Promise<T>>, dependencies: any[] = []) {
+    const [value, setValue] = useState<T>();
+    const fetchFx = usePromiseFx((...reset: Parameters<typeof _callback>) => _callback(...reset).then(setValue));
+
+    useEffect(() => {
+        if (typeof fetchFx !== 'function' || fetchFx?.length !== 0) return; // Promise 函数定义入参时，不自动执行
+        fetchFx(); // Promise 函数没有定义入参时，自动执行
+    }, dependencies);
+
+    return [
+        value,
+        fetchFx,
+    ] as const;
+}
+
  /// 创建 socket 链接，并支持断线重连
 export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 发送消息类型 */, U/* 接收消息类型 */>(url: ConstructorParameters<typeof SocketClient>[0], protocols?: ConstructorParameters<typeof SocketClient>[1], options?: {
     isAutoConnect: boolean, // 是否自动重连
@@ -131,4 +147,67 @@ export function useBoolean () {
         state,
         toggleState,
     ]
+}
+
+/// DOM元素全屏
+export function useFullScreen (element: HTMLElement | (() => HTMLElement)) {
+    const [isFullScreen, toggleIsFullScreen] = useBoolean();
+
+    const requestFullscreenFx = () => toggleIsFullScreen(true); // 开启全屏
+    const exitFullscreenFx = () => toggleIsFullScreen(false); // 退出全屏
+
+    useEffect(() => {
+        const _element = typeof element === 'function' ? element() : element;
+
+        if (!_element || !document.fullscreenEnabled) return; // element 不存在或者 不支持全屏的情况不执行
+        if (!isFullScreen) { // 退出全屏
+            if (document.fullscreenElement) document.exitFullscreen();
+            return;
+        }
+
+        // 全屏
+        if (!document.fullscreenElement) _element.requestFullscreen();
+
+        return () => {
+            if (document.fullscreenElement) document.exitFullscreen();
+        }
+    }, [isFullScreen]);
+    
+    return [
+        Object.assign(requestFullscreenFx, {
+            isFullScreen
+        }),
+        exitFullscreenFx
+    ] as const;
+}
+
+/// 网络变化
+export function useNetWorkOnline() {
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    // @ts-ignore
+    const [networkInformation, setNetworkInformation] = useState(navigator.connection);
+
+    const handleOpenNetwork = () => setIsOnline(true);
+    const handleCloseNetwork = () => setIsOnline(false);
+
+    // @ts-ignore
+    const handleSetNetworkInformation = () => setNetworkInformation(navigator.connection);
+    useEffect(() => {
+        window.addEventListener('online', handleOpenNetwork);
+        window.addEventListener('offline', handleCloseNetwork);
+        // @ts-ignore
+        navigator.connection?.addEventListener('change', handleSetNetworkInformation);
+
+        return () => {
+            window.removeEventListener('online', handleOpenNetwork);
+            window.removeEventListener('offline', handleCloseNetwork);
+            // @ts-ignore
+            navigator.connection?.removeEventListener('change', handleSetNetworkInformation);
+        }
+    }, []);
+
+    return [
+        isOnline,
+        networkInformation
+    ] as const;
 }
