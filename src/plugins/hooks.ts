@@ -87,46 +87,37 @@ export function usePromiseValueFx<T> (_callback: Callback<Promise<T>>, dependenc
     ] as const;
 }
 
- /// 创建 socket 链接，并支持断线重连
-export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 发送消息类型 */, U/* 接收消息类型 */>(url: ConstructorParameters<typeof SocketClient>[0], protocols?: ConstructorParameters<typeof SocketClient>[1], options?: {
-    isAutoConnect: boolean, // 是否自动重连
+/// 创建 socket 链接，并支持断线重连
+export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 发送消息类型 */, U = string/* 接收消息类型 */>(url: ConstructorParameters<typeof SocketClient>[0], protocols?: ConstructorParameters<typeof SocketClient>[1], options?: {
+    // isAutoConnect: boolean, // 是否自动重连
 }) {
-    const [socket, setSocket] = useState<SocketClient<T, U>>(); // socket 实例
+    const [socket] = useState(new SocketClient<T, U>(url, protocols)); // socket 实例
     const [readyState, setReadyState] = useState(ReadyState.Initial); // socket 连接状态
-    const [message, setMessage] = useState<Parameter<Parameter<SocketClient['registerMessageCallback']>>>(Object.create(null)); // socket 消息
+    const [message, setMessage] = useState<MessageEvent>(Object.create(null)); // socket 消息
 
-    const handleConnect = () => { // 创建 socket
-        if (typeof socket !== 'undefined' && [ReadyState.Connecting, ReadyState.Done].includes(socket.readyState)) return; // 正在连接（socket实例已经创建的情况下），并且连接已经成功的状态下不允许再次连接
+    const handleRegisterCallback = () => { // 注册 socket 回调事件
 
-        setSocket(() => {
-            const instance = new SocketClient<T, U>(url, protocols); // 创建 socket 实例
-            if (typeof socket !== 'undefined') return socket.copyWithInstance(instance); // 重连
-
-            return instance // 首次连接，需要注册回调事件
-                        .registerOpenCallback(() => {
-                            setReadyState(instance.readyState);
-                        })
-                        .registerErrorCallback(() => {
-                            setReadyState(instance.readyState);
-                        })
-                        .registerCloseCallback(() => {
-                            setReadyState(instance.readyState);
-                        })
-                        .registerMessageCallback((event) => {
-                            setReadyState(instance.readyState);
-                            setMessage(event);
-                        });
-        });
-
-        
+        socket // 首次连接，需要注册回调事件
+                .registerOpenCallback(() => {
+                    setReadyState(socket.state);
+                })
+                .registerErrorCallback(() => {
+                    setReadyState(socket.state);
+                })
+                .registerCloseCallback(() => {
+                    setReadyState(socket.state);
+                })
+                .registerMessageCallback((event) => {
+                    setReadyState(socket.state);
+                    setMessage(event as MessageEvent);
+                });
     }
 
-    useEffect(() => { // 自动重连
-        if (!options?.isAutoConnect) return; // 未配置自动重连
-        if (socket?.manuallyClose) return; // 手动关闭的状态下不在执行重连
+    useEffect(() => { // 注册回调
+        handleRegisterCallback();
 
-        handleConnect();
-    }, [readyState, options, socket]);
+        return socket.close;
+    }, []);
 
     return [
         message,
@@ -135,10 +126,10 @@ export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 
             readyState,
             connecting: readyState === ReadyState.Connecting,
         }
-    ] as [typeof message, Prettify<typeof socket & Record<'connecting', boolean>>];
+    ] as const;
 }
 
- /// 布尔
+/// 布尔
 export function useBoolean () {
     const [state, setState] = useState(false);
     const toggleState = useCallback(() => setState(!state), [state]);
