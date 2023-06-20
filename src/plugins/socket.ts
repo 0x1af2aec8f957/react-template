@@ -8,7 +8,8 @@ export const enum ReadyState {
     Closed, // 连接已经关闭或者连接不能打开
 }
 
-export default class<T extends ArrayInnerType<WebSocketParameters<'send'>> = string/* 发送消息的类型 */, U = any/* 收到消息的类型 */> extends WebSocket {
+export default class<T extends ArrayInnerType<WebSocketParameters<'send'>> = Parameters<typeof JSON.stringify>[0]/* 发送消息的类型 */, U = Parameters<typeof JSON.parse>[0]/* 收到消息的类型 */> {
+    private instance: WebSocket; // socket 实例
     state: ReadyState = ReadyState.Initial; // 初始化状态
     manuallyClose = false; // 是否是手动关闭
     protected openCallbacks: WebSocketCallback<'onopen'>[]  = [];
@@ -18,7 +19,19 @@ export default class<T extends ArrayInnerType<WebSocketParameters<'send'>> = str
     protected messageCallbacks: ((event: MessageEvent<U>) => any)[] = [];
 
     constructor(...reset: ConstructorParameters<typeof WebSocket>) {
-        super(...reset); // 建立 socket 链接
+        this.connect(...reset);
+    }
+
+    private connect(...reset: ConstructorParameters<typeof WebSocket>) { // 创建连接，初始化事件注册
+        this.instance = new WebSocket(...reset); // 建立 socket 链接
+        this.instance.addEventListener('close', () => { // 注册自动重连
+            if (this.manuallyClose) return; // 手动关闭时，不再进行重连
+            if (process.env.NODE_ENV === 'development') console.warn('customize-socket：即将重连');
+            const timer = setTimeout(() => {
+                this.connect(...reset); // 重新建立连接
+                clearTimeout(timer);
+            }, 1000);
+        });
 
         this.init(); // 初始化回调函数、状态改变等绑定
     }
@@ -37,33 +50,36 @@ export default class<T extends ArrayInnerType<WebSocketParameters<'send'>> = str
 
     private get openCallback() { // Web Socket 已连接上需要执行的回调函数
         return (...reset: WebSocketParameters<'onopen'>) => {
+            if (process.env.NODE_ENV === 'development') console.warn('customize-socket：连接成功');
             this.state = ReadyState.Done;
-            this.openCallbacks.forEach((callback) => callback.apply(this, reset));
+            this.openCallbacks.forEach((callback) => callback.apply(this.instance, reset));
         }
  
     }
 
     private get errorCallback() { // Web Socket 通信发生错误需要执行的回调函数
         return (...reset: WebSocketParameters<'onerror'>) => {
+            if (process.env.NODE_ENV === 'development') console.error('customize-socket：发生错误', reset[0]);
             this.state = ReadyState.Fail;
-            this.errorCallbacks.forEach((callback) => callback.apply(this, reset));
+            this.errorCallbacks.forEach((callback) => callback.apply(this.instance, reset));
         }
         
     }
 
     private get closeCallback() { // Web Socket 已关闭需要执行的回调函数
-        return (...reset: WebSocketParameters<'onclose'>) => { // TODO: 重新连接
+        return (...reset: WebSocketParameters<'onclose'>) => {
+            if (process.env.NODE_ENV === 'development') console.warn('customize-socket：被关闭');
             this.state = ReadyState.Closed;
-
-            this.closeCallbacks.forEach((callback) => callback.apply(this, reset));
+            this.closeCallbacks.forEach((callback) => callback.apply(this.instance, reset));
         }
 
     }
 
     private get messageCallback() { // Web Socket 收到消息需要执行的回调函数
         return (...reset: WebSocketParameters<'onmessage'>) => {
+            if (process.env.NODE_ENV === 'development') console.info('customize-socket：收到消息', reset[0]);
             this.state = ReadyState.Done;
-            this.messageCallbacks.forEach((callback) => callback.apply(this, reset));
+            this.messageCallbacks.forEach((callback) => callback.apply(this.instance, reset));
         }
         
     }
@@ -131,25 +147,24 @@ export default class<T extends ArrayInnerType<WebSocketParameters<'send'>> = str
     init() { // 初始化连接状态、回调函数注册
         this.state = ReadyState.Connecting; // Web Socket 正在链接时的状态
 
-        this.addEventListener('open', this.openCallback); // Web Socket 已连接上
-        this.addEventListener('error', this.errorCallback); // Web Socket 通信发生错误
-        this.addEventListener('close', this.closeCallback); // Web Socket 已关闭
-        this.addEventListener('message', this.messageCallback); // Web Socket 收到消息
+        this.instance.addEventListener('open', this.openCallback); // Web Socket 已连接上
+        this.instance.addEventListener('error', this.errorCallback); // Web Socket 通信发生错误
+        this.instance.addEventListener('close', this.closeCallback); // Web Socket 已关闭
+        this.instance.addEventListener('message', this.messageCallback); // Web Socket 收到消息
     }
 
     close() { // 关闭 socket
-        this.manuallyClose = true; // 手动关闭标识
+        this.manuallyClose = true; // 更新手动关闭标识
         // 清理回调函数
         this.clearOpenCallback();
         this.clearErrorCallback();
         this.clearCloseCallback();
         this.clearMessageCallback();
-        this.close(); // 关闭socket
+        this.instance.close(); // 关闭socket
     }
 
     sendMessage(message: T) { // 发送消息
-        this.send(message);
+        this.instance.send(typeof message === 'string' ? message : JSON.stringify(message));
         return this;
     }
-
 }
