@@ -122,7 +122,7 @@ export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 
     return [
         message,
         {
-            ...socket,
+            instance: socket,
             readyState,
             connecting: readyState === ReadyState.Connecting,
         }
