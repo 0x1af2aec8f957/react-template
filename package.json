@@ -20,6 +20,7 @@
     "effector-react": "^22.5.1",
     "events": "^3.3.0",
     "i18next": "^22.4.14",
+    "idb": "^7.1.1",
     "md5": "^2.3.0",
     "os-browserify": "^0.3.0",
     "react": "^18.2.0",
@@ -37,8 +38,8 @@
     "@types/react-dom": "^18.0.11"
   },
   "optionalDependencies": {
-    "cross-env": "latest",
     "core-js": "latest",
+    "cross-env": "latest",
     "parcel": "latest",
     "typescript": "~4"
   }
