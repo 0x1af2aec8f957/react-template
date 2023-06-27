@@ -10,9 +10,14 @@ html, body {
     -webkit-overflow-scrolling: touch;
 }
 
+body {
+    // overscroll-behavior-y: contain; // 禁用浏览器的下拉页面时刷新
+}
+
 #root {
     width: 100%;
     height: 100%;
+    // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; // 匹配用户的默认平台字体
 
     &:-webkit-full-screen { // 全屏样式设置
         object-fit: contain;
