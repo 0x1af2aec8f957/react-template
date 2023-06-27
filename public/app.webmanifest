@@ -1,0 +1,14 @@
+{
+    "name": "react-template",
+    "short_name": "react",
+    "start_url": "/",
+    "display": "standalone",
+    "id": "react-template",
+    "icons": [
+        {
+            "src": "./favicon.ico",
+            "type": "image/ico",
+            "sizes": "64x64"
+        }
+    ]
+}
