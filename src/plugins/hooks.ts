@@ -35,6 +35,36 @@ export function useDelayFx<T> (callback: CallBack<T>, duration: number = 0) {
     ] as [CallBack<Promise<T>>, () => void];
 }
 
+/// 重复执行
+export function useLoopFx (callback: CallBack<any>, duration: number = 5000) {
+    let timer: ReturnType<typeof setTimeout>;
+    const [count, setCount] = useState(0); // 执行次数
+
+    const cancel = () => {
+        if (typeof timer !== 'undefined') clearInterval(timer);
+    }
+
+    const loopFx = (...reset: Parameters<typeof callback>) => {
+        cancel(); // 在尚未完成上次执行情况下再次调用，将会放弃上次请求
+        timer = setInterval(() => {
+            callback(...reset); // NOTE: 在 callback 中使用 setState 需要使用 setState((preValue) => newValue) 的方式
+            setCount((_count) => _count + 1); // 记录执行次数
+        }, duration);
+    };
+
+    useEffect(() => { // 组件销毁时，清理timer
+        return cancel;
+    }, []);
+
+    return [
+        Object.assign(loopFx, {
+            count
+        }),
+        cancel,
+    ] as const;
+}
+
+
  /// 获取 ReturnType<promise<any>> 的状态，返回的函数具备截流功能
 export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Parameters<typeof useDelayFx>[1] = 0) {
     const enum Status {
@@ -60,7 +90,7 @@ export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Para
                 setStatus(Status.Done);
                 return Promise.resolve(result);
             })
-            .catch(() => {
+            .catch((error) => {
                 setStatus(Status.Fail);
                 return Promise.reject(error);
             });
@@ -72,7 +102,7 @@ export function usePromiseFx<T> (_callback: CallBack<Promise<T>>, duration: Para
 }
 
 /// 跟usePromiseFx具备一样的功能，但是会自动请求给定的 Promise 方法并返回结果
-export function usePromiseValueFx<T> (_callback: Callback<Promise<T>>, dependencies: any[] = []) {
+export function usePromiseValueFx<T> (_callback: CallBack<Promise<T>>, dependencies: any[] = []) {
     const [value, setValue] = useState<T>();
     const fetchFx = usePromiseFx((...reset: Parameters<typeof _callback>) => _callback(...reset).then(setValue));
 
@@ -130,14 +160,14 @@ export function useSocket<T extends Parameter<NonNullable<WebSocket['send']>>/* 
 }
 
 /// 布尔
-export function useBoolean () {
-    const [state, setState] = useState(false);
-    const toggleState = useCallback(() => setState(!state), [state]);
+export function useBoolean (_state: boolean = false) {
+    const [state, setState] = useState(_state);
+    const toggleStateFx = useCallback((__state?: boolean) => setState(__state ?? !state), [state]);
 
     return [
         state,
-        toggleState,
-    ]
+        toggleStateFx,
+    ] as const;
 }
 
 /// DOM元素全屏
