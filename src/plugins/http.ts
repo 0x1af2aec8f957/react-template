@@ -95,7 +95,8 @@ function httpInit(instance: AxiosInstance): AxiosInstance {
     }, (error) => {
         const { response, /*, message: _message,  __CANCEL__ */ } = error;
         // if (!__CANCEL__) toast(_message || response.message || response.data.message); // 非主动取消请求的接口
-        throw new Error(response);
+        // throw new Error(response);
+        Promise.reject(error);
     });
 
     return instance;
