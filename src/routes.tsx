@@ -32,11 +32,11 @@ const WrapAuthComponent = ({ // 路由鉴权
 export default [
   // These are the same as the props you provide to <Route>
   { 
-    path: "/", 
+    path: "/*", // NOTE: react-router v6嵌套路由函子路由，必须要添加*让其匹配（v5添加空路径''即可），否则子路由将无法展示
     element: <App />,
     children: [
       {
-        path: '',
+        path: '*',
         element: <WrapAuthComponent children={<Home />} />
       }
     ]
