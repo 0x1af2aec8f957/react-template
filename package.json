@@ -12,15 +12,12 @@
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=16384 parcel build ./public/index.html --no-cache --no-source-maps --log-level='error' --dist-dir='./build'"
   },
   "dependencies": {
-    "abortcontroller-polyfill": "latest",
     "axios": "^1.3.5",
     "cookies-js": "^1.2.3",
     "dayjs": "^1.11.7",
     "effector": "^22.8.0",
     "effector-react": "^22.5.1",
     "events": "^3.3.0",
-    "finally-polyfill": "latest",
-    "intl-pluralrules": "latest",
     "i18next": "^22.4.14",
     "idb": "^7.1.1",
     "md5": "^2.3.0",
