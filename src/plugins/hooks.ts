@@ -232,3 +232,21 @@ export function useNetWorkOnline() {
         networkInformation
     ] as const;
 }
+
+/// 页面可见性变化
+export function usePageVisibility() {
+    const [isPageVisible, setIsPageVisible] = useState(!document.hidden);
+
+    const handlePageVisible = () => setIsPageVisible(!document.hidden);
+    useEffect(() => {
+        document.addEventListener('visibilitychange', handlePageVisible);
+        
+        return () => {
+            document.removeEventListener('visibilitychange', handlePageVisible);
+        }
+    }, []);
+
+    return [
+        isPageVisible,
+    ] as const;
+}
