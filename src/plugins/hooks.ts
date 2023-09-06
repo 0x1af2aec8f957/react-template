@@ -253,14 +253,15 @@ export function usePageVisibility() {
 }
 
 /// webrtc 流媒体
-export function useRTC(streamPath: string = 'live/webrtc') {
+export function useRTC() {
     const pc = new RTCPeerConnection();
     const offer = useRef<RTCSessionDescriptionInit>();
 
+    const streamPath = useRef('/webrtc/play/live/webrtc');
     const [stream, setStream] = useState<MediaStream>();
 
     const handleFetchSdp = () => http.post(
-        `/webrtc/play/${streamPath}`,
+        streamPath.current,
         offer.current?.sdp,
         {
             headers: {
@@ -295,7 +296,7 @@ export function useRTC(streamPath: string = 'live/webrtc') {
 
         pc.createOffer().then((desc) => {
             offer.current = desc;
-            return pc.setLocalDescription(desc).then(handleFetchSdp);
+            return pc.setLocalDescription(desc);
         });
 
         return () => pc.close();
@@ -304,5 +305,7 @@ export function useRTC(streamPath: string = 'live/webrtc') {
     return [stream, {
         pc,
         offer,
+        setStreamPath: (_streamPath: string) => streamPath.current = _streamPath,
+        connect: () => handleFetchSdp(),
     }] as const;
 }
