@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import http from 'axios';
 
 import SocketClient, { ReadyState } from './socket';
 
@@ -249,4 +250,59 @@ export function usePageVisibility() {
     return [
         isPageVisible,
     ] as const;
+}
+
+/// webrtc 流媒体
+export function useRTC(streamPath: string = 'live/webrtc') {
+    const pc = new RTCPeerConnection();
+    const offer = useRef<RTCSessionDescriptionInit>();
+
+    const [stream, setStream] = useState<MediaStream>();
+
+    const handleFetchSdp = () => http.post(
+        `/webrtc/play/${streamPath}`,
+        offer.current?.sdp,
+        {
+            headers: {
+                'content-type': 'application/sdp'
+            },
+        }
+    ).then((remoteSdp) => {
+        console.log('remoteSdp', remoteSdp.data);
+        pc.setRemoteDescription(new RTCSessionDescription({
+            type: 'answer',
+            sdp: remoteSdp.data
+        }));
+    });
+
+    useEffect(() => {
+        pc.ontrack = ({ streams } = Object.create(null)) => {
+            if (streams.length === 0) return;
+            setStream(streams[0]);
+            // video.current.srcObject = e.streams[0];
+            // video.current.play();
+        };
+
+        pc.oniceconnectionstatechange = () => {
+            console.log('oniceconnectionstatechange', pc.iceConnectionState);
+        };
+        pc.onicecandidate = (e) => {
+            console.log('onicecandidate', e.candidate);
+        };
+    
+        pc.addTransceiver('video', { direction: 'recvonly' });
+        pc.addTransceiver('audio', { direction: 'recvonly' });
+
+        pc.createOffer().then((desc) => {
+            offer.current = desc;
+            return pc.setLocalDescription(desc).then(handleFetchSdp);
+        });
+
+        return () => pc.close();
+    }, []);
+
+    return [stream, {
+        pc,
+        offer,
+    }] as const;
 }
