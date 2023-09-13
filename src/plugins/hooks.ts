@@ -5,6 +5,7 @@ import SocketClient, { ReadyState } from './socket';
 
 type CallBack<T = any> = (...reset: any[]) => T;
 
+const isDevelopment = process.env.NODE_ENV === 'development'; // 是否开发环境
  /// 延迟执行，具备防抖功能
 export function useDelayFx<T> (callback: CallBack<T>, duration: number = 0) {
     let timer: ReturnType<typeof setTimeout>;
@@ -253,7 +254,7 @@ export function usePageVisibility() {
 }
 
 /// webrtc 流媒体
-export function useRTC() {
+export function useRTC() { // NOTE: https://bugs.chromium.org/p/chromium/issues/detail?id=825576
     const pc = new RTCPeerConnection();
     const offer = useRef<RTCSessionDescriptionInit>();
 
@@ -284,10 +285,10 @@ export function useRTC() {
             // video.current.play();
         };
 
-        pc.oniceconnectionstatechange = () => {
+        if(isDevelopment) pc.oniceconnectionstatechange = () => {
             console.log('oniceconnectionstatechange', pc.iceConnectionState);
         };
-        pc.onicecandidate = (e) => {
+        if(isDevelopment) pc.onicecandidate = (e) => {
             console.log('onicecandidate', e.candidate);
         };
     
@@ -299,7 +300,13 @@ export function useRTC() {
             return pc.setLocalDescription(desc);
         });
 
-        return () => pc.close();
+        return () => {
+            pc.ontrack = null;
+            delete offer.current;
+            pc.oniceconnectionstatechange = null;
+            pc.close();
+            // URL.revokeObjectURL(URL.createObjectURL(new Blob([new ArrayBuffer(5e+7)]))) // 50Mo buffer
+        }
     }, []);
 
     return [stream, {
