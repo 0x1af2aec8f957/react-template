@@ -15,31 +15,32 @@
     "main": false
   },
   "dependencies": {
-    "axios": "^1.3.5",
+    "axios": "^1.5.0",
     "cookies-js": "^1.2.3",
-    "dayjs": "^1.11.7",
-    "effector": "^22.8.0",
-    "effector-react": "^22.5.1",
+    "dayjs": "^1.11.9",
+    "effector": "^22.8.6",
+    "effector-react": "^22.5.4",
     "events": "^3.3.0",
-    "i18next": "^22.4.14",
+    "i18next": "^23.5.1",
     "idb": "^7.1.1",
     "md5": "^2.3.0",
     "os-browserify": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^12.2.0",
-    "react-router-dom": "^6.10.0"
+    "react-i18next": "^13.2.2",
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
+    "@tsconfig/create-react-app": "^2.0.1",
     "@types/md5": "^2.3.2",
-    "@types/node": "^18.15.11",
-    "@types/react": "^18.0.34",
-    "@types/react-dom": "^18.0.11"
+    "@types/node": "^20.6.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7"
   },
   "optionalDependencies": {
     "core-js": "latest",
     "cross-env": "latest",
     "parcel": "latest",
-    "typescript": "~4"
+    "typescript": "~5"
   }
 }
