@@ -32,13 +32,13 @@
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
-    "@tsconfig/create-react-app": "^2.0.1",
     "@types/md5": "^2.3.2",
     "@types/node": "^20.6.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7"
   },
   "optionalDependencies": {
+    "@tsconfig/create-react-app": "latest",
     "core-js": "latest",
     "cross-env": "latest",
     "parcel": "latest",
