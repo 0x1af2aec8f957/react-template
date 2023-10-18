@@ -1,3 +1,13 @@
 import { Outlet } from 'react-router-dom';
+import { ErrorBoundary } from "react-error-boundary";
 
-export default (props: any) => (<>Hello React.App!<br /><Outlet /></>);
+import CustomErrorBoundary from './ErrorBoundary';
+
+export default (props: any) => (
+        <>
+                <h1 style={{ textAlign: 'center' }}>Hello React.App!</h1>
+                <ErrorBoundary FallbackComponent={CustomErrorBoundary}>
+                    <Outlet />
+                </ErrorBoundary>
+        </>
+);
