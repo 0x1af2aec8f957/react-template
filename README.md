@@ -21,3 +21,6 @@ npm run build
 # run all tests
 npm test
 ```
+
+## help
+[Buy me a coffee](https://www.buymeacoffee.com/0x1af2aec8f957)
