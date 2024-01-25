@@ -1,17 +1,17 @@
-/// 空状态
+/// iframe 组件
 
-import { type ReactNode, type HTMLProps } from 'react';
+import { type HTMLProps, type SyntheticEvent } from 'react';
 
-interface Props extends HTMLProps<HTMLIframeElement> {
-    needFixInputFontSize: bool; // 是否需要修复在 iOS 上 input 字体小于16px 时，聚焦会被放大的问题
+interface Props extends HTMLProps<HTMLIFrameElement> {
+    needFixInputFontSize: boolean; // 是否需要修复在 iOS 上 input 字体小于16px 时，聚焦会被放大的问题
 }
 
 export default ({
-    needFixInputFontSize,
     onLoad,
+    needFixInputFontSize = false,
     ...otherProps
 }: Props) => {
-    const handleLoad = () => {
+    const handleLoad = (event: SyntheticEvent<EventTarget>) => {
         if (needFixInputFontSize) {
             const metaEl = document.createElement('meta');
             metaEl.setAttribute('name', 'viewport')
@@ -19,9 +19,9 @@ export default ({
             document.head.append(metaEl);
         }
 
-        if (typeof onLoad !== 'undefined') handleLoad();
+        if (typeof onLoad !== 'undefined') handleLoad(event);
     }
-    
+
     return (
         <iframe {...otherProps} onLoad={handleLoad} />
     )
