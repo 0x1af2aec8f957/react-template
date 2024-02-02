@@ -1,10 +1,6 @@
 # react-template
 
-> A React.js template [Already eject].
-
-> Use [bulma.css](https://bulma.io) (Old version use qc_ui).
-
-> Build use [parceljs](https://parceljs.org).
+> 项目模板需要在[安全上下文](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts)中运行。
 
 ## Build Setup
 
@@ -23,4 +19,5 @@ npm test
 ```
 
 ## help
+
 [Buy me a coffee](https://www.buymeacoffee.com/0x1af2aec8f957)
